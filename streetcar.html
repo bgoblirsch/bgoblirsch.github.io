@@ -1,0 +1,57 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="sc_leaflet/leaflet.css" />
+		<script type="text/javascript" src="sc_leaflet/leaflet.js"></script>
+		<script type="text/javascript" src="sc_leaflet/jquery-1.8.2.min.js"></script>
+		<script type="text/javascript" src="sc_leaflet/streetcarLines.js"></script>
+		<script type="text/javascript" src="sc_leaflet/leafletembed.js"></script>
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDA8YGIDaq-yaNJ14wNETafJop6xp3-DnA&libraries=places"></script>
+	</head>
+	<body>
+        <style>
+            #close {
+                float:right;
+                display:inline-block;
+                padding:4px 8px;
+            }
+            #close:hover {
+                float:right;
+                display:inline-block;
+                cursor:pointer;
+            }
+            #menu {
+                background-color: #001f3f;
+                color: #fff;
+                position: absolute;
+                z-index: 1000;
+                top: 20px;
+                left: 20px;
+                padding-left: 15px;
+                padding-right: 7px;
+                border-radius: 20px;
+                border-top: 1px solid #71afb6;
+                box-shadow: 0 4px 15px rgba(0,0,0,.25);
+                width: 320px;
+                font-family: 'Open Sans', sans-serif;
+            }
+        </style>
+        
+		<div id="map" style="border:1px solid black; width:100%; height:99.8%; z-index: 1">
+		</div>
+        
+        <div id="menu">
+            <span id='close' onclick='this.parentNode.parentNode.removeChild(this.parentNode); return false;'>x</span>
+            <p>This is an interpretation of the Minneapolis/St. Paul streetcar system if it still existed today. It incorporates the existing Green and Blue LRT lines and is adjusted to fit the existing street network. The streetcar lines were digitized using these sources:
+            </p>
+            <ul>
+                <li><a href="https://old.trolleyride.org/History/PDFs/Streetcar_colored_map.pdf" target="_blank">1933 Twin CIties Streetcar Map</a></li>
+                <li><a href="https://old.trolleyride.org/History/PDFs/TCRT_Mpls_map_1946.pdf" target="_blank">1946 Minneapolis Streetcar Map</a></li>
+                <li><a href="https://old.trolleyride.org/History/PDFs/TCRT_St._Paul_map_1947.pdf" target="_blank">1947 St. Paul Streetcar Map</a></li>
+            </ul>
+        </div>
+        
+		<script>
+			initMap();
+		</script>
+	</body>
+</html>
