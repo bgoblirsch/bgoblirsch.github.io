@@ -7,8 +7,40 @@
 		<script type="text/javascript" src="leaflet/leafletembed.js"></script>
 	</head>
 	<body>
+        <style>
+            #close {
+                float:right;
+                display:inline-block;
+                padding:4px 8px;
+            }
+            #close:hover {
+                float:right;
+                display:inline-block;
+                cursor:pointer;
+            }
+            #menu {
+                background-color: #71afb6;
+                color: #fff;
+                position: absolute;
+                z-index: 1000;
+                top: 20px;
+                left: 20px;
+                padding-left: 15px;
+                padding-right: 7px;
+                border-radius: 20px;
+                border-top: 1px solid #71afb6;
+                box-shadow: 0 4px 15px rgba(0,0,0,.25);
+                width: 320px;
+                font-family: 'Open Sans', sans-serif;
+            }
+        </style>
+        
 		<div id='map' style="border:1px solid black; width:100%; height:99.8%;">
 		</div>
+        <div id="menu">
+            <span id='close' onclick='this.parentNode.parentNode.removeChild(this.parentNode); return false;'>x</span>
+            <p>Click on a state to zoom to its extent and view its counties. Click on the state again to reset the map.</p>
+        </div>
 		<script>
 			initMap();
 		</script>
