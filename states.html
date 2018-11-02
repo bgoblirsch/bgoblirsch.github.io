@@ -24,13 +24,20 @@ var map = new mapboxgl.Map({
 });
 
 map.on('load', function () {
-    map.addSource("states.geojson")
+    map.addSource("states", {
+        "type": "geojson",
+        "data": "states.geojson"
+    })
     map.addLayer({
         "id": "states",
-        "type": "geojson",
-        "source": "states.geojson",
+        "type": "fill",
+        "source": "states",
+        "paint": {
+            'fill-color': '#088',
+            'fill-opacity': 0.8
+        }
         //"source-layer": "states",
-    };
+    });
 });
 </script>
 
