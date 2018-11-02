@@ -23,6 +23,7 @@ function initMap() {
 	if (map.tap) map.tap.disable();
 
 	var MNGeoImagery = L.tileLayer.wms('http://geoint.lmic.state.mn.us/cgi-bin/wms?',{
+            attribution:'MnGeo Image Service',
 			layers: 'met16'
 	}).addTo(map);
     
