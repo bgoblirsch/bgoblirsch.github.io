@@ -1,0 +1,70 @@
+﻿.city{
+	stroke:black;
+	stroke-width:2;
+	fill:red;
+	cursor:pointer;
+}
+
+.mapText{
+	position:absolute;
+	color:black;
+	font-size:70%;
+	text-align:left;
+	white-space:nowrap;
+	cursor:pointer;
+}
+
+.info{
+	position:relative;
+	background-color:#4c721d;
+	border-color:white;
+	border-style:solid;
+	border-radius:10px;
+	border-width:2px;
+	display:none;
+	width:420px;
+	height:auto;
+	z-index:1;
+	box-shadow: 2px 2px 20px black;
+}
+
+.infoHeader{
+	color:white;
+	white-space:nowrap;
+	padding:4px 10px 1px 10px;
+	line-height:0.5;
+	text-align:center;
+}
+
+.phone{
+	color:white;
+	white-space:nowrap;
+	padding:1px 10px 2px 10px;
+	line-height:0.5;
+	text-align:center;
+	margin:8px 0px 8px 0px;
+}
+
+.address{
+	color:white;
+	text-align:center;
+	margin:4px 0px 4px 0px;
+}
+
+.closeWindow{
+	color:#black;
+	background-color:#bdbdbd;
+	text-align:center;
+	text-decoration:underline;
+	font-size:10px;
+	border-radius:5px;
+	margin:1px 10px 5px 10px;
+	cursor:pointer;
+}
+
+.googleMaps{
+	text-align:center;
+	text-decoration:underline;
+	padding:5px 0p 5px 0px;
+	color:#71afb6;
+}
