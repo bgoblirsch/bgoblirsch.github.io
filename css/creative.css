@@ -100,7 +100,7 @@ img::-moz-selection {
 
 #mainNav .navbar-brand {
   font-weight: 700;
-  text-transform: uppercase;
+
   color: #F05F40;
   font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
 }
@@ -113,7 +113,7 @@ img::-moz-selection {
 #mainNav .navbar-nav > li.nav-item > a.nav-link:focus {
   font-size: .9rem;
   font-weight: 700;
-  text-transform: uppercase;
+
   color: #212529;
 }
 
@@ -293,7 +293,7 @@ header.masthead p {
 
 .btn {
   font-weight: 700;
-  text-transform: uppercase;
+
   border: none;
   border-radius: 300px;
   font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
