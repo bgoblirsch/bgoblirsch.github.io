@@ -1,6 +1,14 @@
 #sc_arrow {
-  position: relative;
+  position: absolute;
   bottom: 10px;
+}
+
+#headerRow {
+  text-shadow: 2px 2px 8px #000000;
+}
+
+#headerDiv {
+  position: relative;
 }
 
 .scroll_down {
