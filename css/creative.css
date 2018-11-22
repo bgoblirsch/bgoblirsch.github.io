@@ -191,6 +191,10 @@ header.masthead h1 {
   font-size: 2rem;
 }
 
+header.masthead h2 {
+  font-size: 3vw;
+}
+
 header.masthead p {
   font-weight: 300;
 }
