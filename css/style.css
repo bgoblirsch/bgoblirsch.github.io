@@ -1,14 +1,11 @@
-#sc_arrow {
-  position: absolute;
-  bottom: 10px;
-}
-
-#headerRow {
+#headerText {
+  position: relative;
+  top: 360px;
   text-shadow: 2px 2px 8px #000000;
 }
 
-#headerDiv {
-  position: relative;
+#arrow {
+  display: inline;
 }
 
 .scroll_down {
@@ -16,6 +13,9 @@
 }
 
 .bounce {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 	-moz-animation: bounce 3s infinite;
 	-webkit-animation: bounce 3s infinite;
 	animation: bounce 3s infinite;
