@@ -22,18 +22,38 @@ function initMap() {
 	map.keyboard.disable();
 	if (map.tap) map.tap.disable();
 
-	var MNGeoImagery = L.tileLayer.wms('http://geoint.lmic.state.mn.us/cgi-bin/wms?',{
-            attribution:'MnGeo Image Service',
-			layers: 'met16'
-	}).addTo(map);
-    
-    new L.Control.Zoom({ position: 'topright' }).addTo(map);
+	//var MNGeoImagery = L.tileLayer.wms('http://geoint.lmic.state.mn.us/cgi-bin/wms?',{
+  //          attribution:'MnGeo Image Service',
+	//		layers: 'met16'
+	//}).addTo(map);
+	L.esri.basemapLayer('Imagery').addTo(map);
 
-	geojsonStreetcarLines = L.geoJson(window.scLines, {style: styleStreetcarLines, onEachFeature:onEachLine}).addTo(map);
+
+  new L.Control.Zoom({ position: 'topright' }).addTo(map);
+
+
 	//map.fitBounds(geojsonStreetcarLines.getBounds());
-    map.setView([44.954412, -93.214082],12)
+
+	streetLabels = L.esri.basemapLayer('ImageryTransportation').addTo(map);
+	map.removeLayer(streetLabels)
+	geojsonStreetcarLines = L.geoJson(window.scLines, {style: styleStreetcarLines, onEachFeature:onEachLine}).addTo(map);
+	L.esri.basemapLayer('ImageryLabels').addTo(map);
+
+  map.setView([44.954412, -93.214082],12);
+
+	map.on('zoomend', function() {
+		if (map.getZoom() >= 16) {
+			map.addLayer(streetLabels);
+		}
+		if (map.getZoom() < 16) {
+			map.removeLayer(streetLabels);
+		}
+	});
 }
 
+function zoomCheck() {
+
+}
 
 function onEachLine(features, layer) {
 	layer.on({
