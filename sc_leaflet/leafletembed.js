@@ -22,25 +22,28 @@ function initMap() {
 	map.keyboard.disable();
 	if (map.tap) map.tap.disable();
 
+	// MN Geo Imagery, ESRI works better with the labels
 	//var MNGeoImagery = L.tileLayer.wms('http://geoint.lmic.state.mn.us/cgi-bin/wms?',{
   //          attribution:'MnGeo Image Service',
 	//		layers: 'met16'
 	//}).addTo(map);
-	L.esri.basemapLayer('Imagery').addTo(map);
 
+	L.esri.basemapLayer('Imagery').addTo(map);
 
   new L.Control.Zoom({ position: 'topright' }).addTo(map);
 
+	// Street Labels start off and are turned on when zoomed in
+	streetLabels = L.esri.basemapLayer('ImageryTransportation');
 
-	//map.fitBounds(geojsonStreetcarLines.getBounds());
-
-	streetLabels = L.esri.basemapLayer('ImageryTransportation').addTo(map);
-	map.removeLayer(streetLabels)
+	// Streetcar Lines - Future feature: add a pop-up with line name/info
 	geojsonStreetcarLines = L.geoJson(window.scLines, {style: styleStreetcarLines, onEachFeature:onEachLine}).addTo(map);
 	L.esri.basemapLayer('ImageryLabels').addTo(map);
 
+	// Custom setView works for better initial bounds
+	//map.fitBounds(geojsonStreetcarLines.getBounds());
   map.setView([44.954412, -93.214082],12);
 
+	// add/remove street labels layer
 	map.on('zoomend', function() {
 		if (map.getZoom() >= 16) {
 			map.addLayer(streetLabels);
@@ -49,10 +52,6 @@ function initMap() {
 			map.removeLayer(streetLabels);
 		}
 	});
-}
-
-function zoomCheck() {
-
 }
 
 function onEachLine(features, layer) {
@@ -68,7 +67,7 @@ function styleStreetcarLines(feature) {
 		color: feature.properties.line_color,
 		weight: 3
 	};
-};
+}
 
 function highlightLine(e) {
 	var layer = e.target;
