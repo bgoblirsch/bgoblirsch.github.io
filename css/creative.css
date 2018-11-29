@@ -63,6 +63,10 @@ section {
   padding: 2rem 0 1rem;
 }
 
+.contact-link {
+  color: white;
+}
+
 .section-heading {
   margin-top: 0;
 }
