@@ -15,16 +15,16 @@ function clearResults() {
 
 function initMap() {
 	map = new L.Map('map', { zoomControl:false });
-	map.doubleClickZoom.disable();
+	//map.doubleClickZoom.disable();
 	//map.scrollWheelZoom.disable();
 	//map.dragging.disable();
 	//map.touchZoom.disable();
-	map.keyboard.disable();
+	//map.keyboard.disable();
 	if (map.tap) map.tap.disable();
 
 	// MN Geo Imagery, ESRI works better with the labels
 	//var MNGeoImagery = L.tileLayer.wms('http://geoint.lmic.state.mn.us/cgi-bin/wms?',{
-  //          attribution:'MnGeo Image Service',
+  	//     attribution:'MnGeo Image Service',
 	//		layers: 'met16'
 	//}).addTo(map);
 
