@@ -1,10 +1,12 @@
 <html>
 <!-- To Do:
++ move CSS to separate file
 + add disclaimer, privacy policy, etc.
 + avoid dedicated application; see if notifications would be possible through browser or some other means
 	- maybe even just direct them to signup for official mpls notifications
 + default = dark theme
 + host your own tiles with postgis? (non-mvp)
++ on hover over radio text, change color/highlight
 + Auto-detect mobile/desktop and adjust accordingly
 + Change pseudo close button from letter x to an actual button
 + Add detect location prompt; let user select just once or always; add little i for more info -> we value your privacy, etc.
@@ -44,37 +46,34 @@
 	<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.js'></script>
 	<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.css' rel='stylesheet' />
 	<style>
-		body { margin:0; padding:0; }
+	  body { margin:0; padding:0; }
 		#map { position:absolute; top:0; bottom:0; right:0; width:85%; }
-		ul{ padding-left:30px; }
-		#close {
-			float:right;
-			display:inline-block;
-			padding:4px 8px;
-		}
-		#close:hover {
-			float:right;
-			display:inline-block;
-			cursor:pointer;
-		}
-		li {
-			padding-top:5px;
-			padding-bottom:5px;
-		}
-		li:hover {
-			cursor:pointer;
-		}
-		#menu {
-			background-color: #001f3f;
-			color: #fff;
-			position: absolute;
-			z-index: 1;
-			left: 0;
-			padding-left: 5px;
-			border-right: : 1px solid #001f3f;
-			width: 15%;
+		.sidenav {
 			height: 100%;
-			font-family: 'Open Sans', sans-serif;
+			width: 160px;
+			position: fixed;
+			z-index: 1;
+			top: 0;
+			left: 0;
+			background-color: #111;
+			overflow-x: hidden;
+			padding-top: 20px;
+			padding-left: 5px;
+			padding-right: 5px;
+		}
+		.sidenav p {
+			padding: 3px 4px 3px 8px;
+			text-decoration: none;
+			font-size: 15px;
+			color: #818181;
+			display: block;
+		}
+		.sidenav form {
+			padding: 6px 8px 6px 16px;
+			text-decoration: none;
+			font-size: 15px;
+			color: #818181;
+			display: block;
 		}
 	</style>
 </head>
@@ -85,22 +84,19 @@
 
 <div>
 	<div id='map'></div>
-	<div id='menu'>
-  	<span id='close' onclick='this.parentNode.parentNode.removeChild(this.parentNode); return false;'><</span><!-- change functionality to collapse left instead of close; also use a button instead-->
+	<div class='sidenav'>
+		<!-- geocoder/search bar goes here -->
+		<hr>
   	<div id='snow-emergency-status'> <!-- auto resize text in this div to fit on one line in parent div -->
 			<p><u>Snow Emergency Status:</u></p>
 			<p id='status'>No Emergency Declared</p><!-- hook into minneapolis snow emergency API/SMS system -->
 		</div>
-		<form>
-			<button type='radio' id='day1' onclick='displayDay(1)'>Day 1 Rules</button> <!-- when active, highlight and darken other options -->
-			<button type='radio' id='day2' onclick='displayDay(2)'>Day 2 Rules</button>
-			<button type='radio' id='day3' onclick='displayDay(3)'>Day 3 Rules</button>
+		<hr>
+		<form> <!-- I think you Will need JQuery to auto-select the correct button based on emergency status -->
+			<input type='radio' name='day' value='day1' checked>Day 1 Rules</input><br> <!-- when active, highlight and darken other options -->
+			<input type='radio' name='day' value='day2'>Day 2 Rules</input><br>
+			<input type='radio' name='day' value='day3'>Day 3 Rules</input><br>
 		</form>
-  	<ul onload='getStatus()'><!-- needs to be list of state selectors pr radio buttons; upon loading, defaults to the value of the id variable "status" above -->
-      <li><button type='radio' id='day1' onclick='displayDay(1)'>Day 1 Rules</button></li> <!-- when active, highlight and darken other options -->
-      <li><button type='radio' id='day2' onclick='displayDay(2)'>Day 2 Rules</button></li>
-      <li><button type='radio' id='day3' onclick='displayDay(3)'>Day 3 Rules</button></li>
-  	</ul>
 		<div id='day-info'>
 			<div id='day1-info' >
 				<p>No parking on either side of snow emergency routes.</p>
