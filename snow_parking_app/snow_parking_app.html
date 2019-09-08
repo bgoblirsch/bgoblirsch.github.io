@@ -2,30 +2,33 @@
 <!-- To Do:
 + move CSS to separate file
 + add disclaimer, privacy policy, etc.
+  - Any parking signs override information found here. Do not soley rely on this application to determining where to park. You are ultimately responsible for parking properly so always have some situatioonal awareness of the sithuation. This app can only assist you in navigating Minneapolis's Snow Emergency System.   Dealing with the parking rules is no fun, but it allows the snow plows to do their job.
 + avoid dedicated application; see if notifications would be possible through browser or some other means
 	- maybe even just direct them to signup for official mpls notifications
-+ default = dark theme
++ add ability to switch basemap
 + host your own tiles with postgis? (non-mvp)
-+ on hover over radio text, change color/highlight
 + Auto-detect mobile/desktop and adjust accordingly
-+ Change pseudo close button from letter x to an actual button
+	- is this feasible?
+	 	if (x > y) {desktop} else { mobile}
 + Add detect location prompt; let user select just once or always; add little i for more info -> we value your privacy, etc.
-+ Add zoom control buttons; set max zoom and restrict boundary to mpls
-+ add compass for rotation reset
++ restrict map to mpls
 + Add home button - zooms to extent of Minneapolis
-+ change default zoom level and center to extent of Minneapolis
 + finish acquiring data from mpls; optimize if possible (remove erraneous pts, etc. [non-mvp])
 + draw geojson polys from mpls data
 + emergency status module that can toggle between day 1, day 2, and day 3 - default state = 1
-	- on mobile, horizantally spread across the bottom (like G Maps "Explore, Commute, For You")
-	- on Desktop, vertically spread on left side of screen
-	- toggling the days, toggles the parking polygon/geojson colors on the map
 	- some safety check on the server side to make sure it is always accurate
 	- clearly display live Snow Emergency Status
 		* No Emergency Declared, Currently Day 1, Day 2, or Day 3
 	- Clearly state parking rules for the current status period and the upcoming
+	- button: "Show me a 'what-if' one was declared today"
+	- while emergency is in effect, auto-populate the day information area with relevant days; i.e. day2 will be 8 AM - 8 PM Tuesday, Jan 4th, etc.
 	- Expand button to display more info
+		- will not be declared after X:00 PM
 		* general info like blue signs, the official rules/pictures from mpls, etc.
++ Day Information area
+	- on mobile, horizantally spread across the bottom (like G Maps "Explore, Commute, For You")
+	- on Desktop, vertically spread on left side of screen
+	- toggling the days, toggles the parking polygon/geojson colors on the map
 + expand menu button (three horizontal lines) at top left, next to search (on mobile anyway)
 	- on mobile -> button integrated with search (Like Google Maps)
 	- on desktop -> integrate with emergency status module (mimic desktop google maps)
@@ -45,21 +48,35 @@
 	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 	<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.js'></script>
 	<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.css' rel='stylesheet' />
+	<link href="font-awesome/css/all.css" rel="stylesheet"> <!--load all styles -->
 	<style>
 	  body { margin:0; padding:0; }
-		#map { position:absolute; top:0; bottom:0; right:0; width:85%; }
+		#map {
+			top:0;
+			bottom:0;
+			right:0;
+			height:100%;
+			transition: margin-left .5s;
+		 }
+		.geocoder {
+			position:relative;
+			width:100%;
+			border-radius: 0px;
+		}
+		.mapboxgl-ctrl-geocoder {
+			min-width:100%;
+		}
 		.sidenav {
 			height: 100%;
-			width: 160px;
+			width: 0px;
 			position: fixed;
 			z-index: 1;
 			top: 0;
 			left: 0;
 			background-color: #111;
 			overflow-x: hidden;
-			padding-top: 20px;
-			padding-left: 5px;
-			padding-right: 5px;
+			padding-top: 0px;
+			transition: 0.5s;
 		}
 		.sidenav p {
 			padding: 3px 4px 3px 8px;
@@ -68,12 +85,94 @@
 			color: #818181;
 			display: block;
 		}
-		.sidenav form {
-			padding: 6px 8px 6px 16px;
-			text-decoration: none;
-			font-size: 15px;
-			color: #818181;
-			display: block;
+		#snow-emergency-status p {
+			text-align: center;
+			margin: 0px;
+		}
+		#status-title {
+			padding: 2px 4px 2px 4px;
+			font-size: 120%;
+			color: white;
+		}
+		#status p {
+			padding: 2px 4px 2px 4px;
+		}
+		#status-not-declared {
+			color: green;
+		}
+		#status-declared {
+			color: red;
+		}
+		.bold-hr {
+			margin: 4px 0px 4px 0px;
+		}
+
+		.faint-hr {
+			color: #818181
+		}
+		/* Style the sidenav links and the dropdown button */
+		.day-selector {
+		  padding: 6px 8px 6px 16px;
+		  text-decoration: none;
+		  font-size: 20px;
+		  color: #818181;
+		  display: block;
+		  border: none;
+		  background: none;
+		  width:100%;
+		  text-align: left;
+		  cursor: pointer;
+		  outline: none;
+		}
+		/* On mouse-over */
+		.day-selector:hover {
+		  color: #f1f1f1;
+		}
+
+		/* Main content */
+		.main {
+		  margin-left: 200px; /* Same as the width of the sidenav */
+		  font-size: 20px; /* Increased text to enable scrolling */
+		  padding: 0px 10px;
+		}
+
+		/* Add an active class to the active dropdown button */
+		.active {
+		  background-color: #262626;
+		  color: white;
+		}
+
+		/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+		.dropdown-container {
+		  display: none;
+		  background-color: #262626;
+			color: white;
+			text-align: center;
+		}
+
+		.dropdown-container p {
+			color: white;
+			padding: 2px;
+			margin: 2px;
+			font-size: 16px;
+		}
+
+		/* Optional: Style the caret down icon */
+		.fa-caret-down {
+		  float: right;
+		  padding-right: 8px;
+		}
+		/* Style the "Do" section */
+		.do {
+			background-color: green;
+			padding: 10px;
+		}
+		.dont {
+			background-color: red;
+			padding: 10px;
+		}
+		.parking-time {
+			padding: 10px;
 		}
 	</style>
 </head>
@@ -83,48 +182,82 @@
 <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.css' type='text/css' />
 
 <div>
-	<div id='map'></div>
-	<div class='sidenav'>
+	<div class='sidenav' id='sidenav'>
 		<!-- geocoder/search bar goes here -->
-		<hr>
+		<div id='geocoder' class='geocoder'></div>
   	<div id='snow-emergency-status'> <!-- auto resize text in this div to fit on one line in parent div -->
-			<p><u>Snow Emergency Status:</u></p>
-			<p id='status'>No Emergency Declared</p><!-- hook into minneapolis snow emergency API/SMS system -->
+			<!-- info button here saying, "A snow emergency will never be declared after X:00 PM"-->
+			<p id='status-title'><u>Snow Emergency Status:</u></p>
+			<p class='status' id='status-not-declared'>No Emergency Declared</p><!-- hook into minneapolis snow emergency API/SMS system -->
 		</div>
-		<hr>
-		<form> <!-- I think you Will need JQuery to auto-select the correct button based on emergency status -->
-			<input type='radio' name='day' value='day1' checked>Day 1 Rules</input><br> <!-- when active, highlight and darken other options -->
-			<input type='radio' name='day' value='day2'>Day 2 Rules</input><br>
-			<input type='radio' name='day' value='day3'>Day 3 Rules</input><br>
-		</form>
-		<div id='day-info'>
-			<div id='day1-info' >
-				<p>No parking on either side of snow emergency routes.</p>
-				<p>In effect from 9 PM on the day an emergency is declared until 8 AM the next morning.</p>
-				<p>Look for blue street signs and red snow emergency signs to identify snow emergency routes.</p>
+		<hr class='bold-hr'>
+		<div id='day-selector-area'> <!-- I think you Will need JQuery to auto-select the correct button based on emergency status-->
+			<!-- Day 1 Container -->
+			<div id='day1'>
+				<button class='day-selector' id='day1-selector' value=1>
+					Day 1 Rules
+					<i class='fa fa-caret-down'></i>
+				</button>
+				<div class='dropdown-container' id='dropdown-container1'>
+					<div class='do'>
+						<p>Park in any valid parking spot on non-Snow-Emergency-Routes.</p>
+					</div>
+					<div class='dont'>
+						<p>Do <strong>NOT</strong> park on either side of a Snow Emergency Route.</p>
+					</div>
+					<div class='parking-time'>
+						<p>Starting 9 PM on the day of the declared emergency until 8 AM the following morning.</p>
+					</div>
+				</div>
+				<hr class='faint-hr'>
 			</div>
-			<div id='day2-info' hidden=true>Day 2 Info</div>
-			<div id='day3-info' hidden=true>Day 3 Info</div>
+
+			<div id='day2'>
+				<button class='day-selector' id='day2-selector' value=2>
+					Day 2 Rules
+					<i class='fa fa-caret-down'></i>
+				</button>
+				<div class='dropdown-container' id='dropdown-container2'>
+					<div class='do'>
+						<p>Park on either side of Snow Emergency Routes or the Odd side of non-Snow Emergency Routes.</p>
+					</div>
+					<div class='dont'>
+						<p>Do <strong>NOT</strong> park on the <strong>EVEN</strong> side of non-Snow Emergency Routes.</p>
+					</div>
+					<div class='parking-time'>
+						<p>Rules are in effect from:</p>
+						<strong><p>8 AM - 8 PM</p></strong>
+					</div>
+				</div>
+				<hr class='faint-hr'>
+			</div>
+
+			<div id='day3'>
+				<button class='day-selector' id='day3-selector' value=3>
+					Day 3 Rules
+					<i class='fa fa-caret-down'></i>
+				</button>
+				<div class='dropdown-container' id='dropdown-container3'>
+					<div class='do'>
+						<p>Park on either side of Snow Emergency Routes or the <strong>EVEN</strong> side of non-Snow Emergency Routes</p>
+					</div>
+					<div class='dont'>
+						<p>Do <strong>NOT</strong> park on the <strong>ODD</strong> side of non-Snow Emergency Routes.</p>
+					</div>
+					<div class='parking-time'>
+						<p>Rules are in effect from:</p>
+						<strong><p>8 AM - 8 PM</p></strong>
+					</div>
+				</div>
+				<hr class='faint-hr'>
+			</div>
 		</div>
 	</div>
+	<div id='map'></div>
 </div>
-
-<script>
-	mapboxgl.accessToken = 'pk.eyJ1IjoiYmdvYmxpcnNjaCIsImEiOiJjanpybWFsNWcxY3dnM21vNXZmN21lcXNrIn0.MwA-tEeJpUwITy7wkPwYJA';
-	var map = new mapboxgl.Map({
-		container: 'map', // container id
-		style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
-		center: [-74.50, 40], // starting position [lng, lat]
-		zoom: 9 // starting zoom
-	});
-
-	map.addControl(new MapboxGeocoder({
-		accessToken: mapboxgl.accessToken,
-		mapboxgl: mapboxgl
-	}));
-</script>
-
-
+<script src='map.js'></script>
+<script src='ui.js'></script>
+<script src='day-info.js'></script>
 
 </body>
 </html>
