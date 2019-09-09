@@ -26,7 +26,13 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 map.dragRotate.disable();
 
 // Add zoom and compass to the map.
-var nav = new mapboxgl.NavigationControl();
+if (window.screen.availHeight > window.screen.availWidth) {
+  var displayZoom = false;
+}
+else {
+  var displayZoom = true;
+};
+var nav = new mapboxgl.NavigationControl({showZoom: displayZoom});
 map.addControl(nav, 'bottom-right');
 
 

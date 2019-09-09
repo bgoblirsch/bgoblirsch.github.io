@@ -23,6 +23,12 @@ function drawMapLayer(day) {
 var dropdown = document.getElementsByClassName('day-selector');
 var i;
 
+console.log('window height:');
+console.log(window.screen.availHeight);
+console.log()
+console.log('window width:')
+console.log(window.screen.availWidth);
+
 // Add click event listener on the three dropdown buttons
 for (i = 0; i < dropdown.length; i++) {
   dropdown[i].addEventListener('click', function() {
