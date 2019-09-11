@@ -1,0 +1,134 @@
+<html>
+<head>
+	<meta charset='utf-8' />
+	<title>Minneapolis Snow Emergency Parking Guide</title>
+	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+	<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.js'></script>
+	<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.css' rel='stylesheet' />
+	<link href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.css' rel='stylesheet' type='text/css' />
+	<link href="font-awesome/css/all.css" rel="stylesheet"> <!--load all styles -->
+	<link href="css/landscape-styles.css" rel="stylesheet" media="all and (orientation: landscape)">
+	<link href="css/portrait-styles.css" rel="stylesheet" media="all and (orientation: portrait)">
+</head>
+
+<body>
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.min.js'></script>
+
+
+<div>
+	<div id='geocoder-portrait'></div>
+	<div id='geo-status-fixed'>
+		<div id='geocoder-landscape'></div>
+		<div id='snow-emergency-status'> <!-- auto resize text in this div to fit on one line in parent div -->
+			<!-- info button here saying, "A snow emergency will never be declared after X:00 PM"-->
+			<p class='status' id='status-title'><u>Snow Emergency Status:</u></p>
+			<p class='status' id='status-text'>No Emergency Declared</p><!-- hook into minneapolis snow emergency API/SMS system -->
+			<hr class='bold-hr'>
+		</div>
+	</div>
+	<div id='map'></div>
+	<div class='info-landscape' id='info-landscape'>
+		<!-- geocoder/search bar goes here -->
+		<div id='day-selector-area'> <!-- I think you Will need JQuery to auto-select the correct button based on emergency status-->
+			<!-- Day 1 Container -->
+			<div id='day1'>
+				<button class='day-selector' id='day1-selector' value=1>
+					Day 1 Rules
+					<i class='fa fa-caret-down'></i>
+				</button>
+				<div class='dropdown-container' id='dropdown-container1'>
+					<div class='do'>
+						<p>Park in any valid parking spot on non-Snow-Emergency-Routes.</p>
+					</div>
+					<div class='dont'>
+						<p>Do <strong>NOT</strong> park on either side of a Snow Emergency Route.</p>
+					</div>
+					<div class='parking-time'>
+						<p>Starting 9 PM on the day of the declared emergency until 8 AM the following morning.</p>
+					</div>
+				</div>
+				<hr class='faint-hr'>
+			</div>
+
+			<!-- Day 2 Container> -->
+			<div id='day2'>
+				<button class='day-selector' id='day2-selector' value=2>
+					Day 2 Rules
+					<i class='fa fa-caret-down'></i>
+				</button>
+				<div class='dropdown-container' id='dropdown-container2'>
+					<div class='do'>
+						<p>Park on either side of Snow Emergency Routes or the Odd side of non-Snow Emergency Routes.</p>
+					</div>
+					<div class='dont'>
+						<p>Do <strong>NOT</strong> park on the <strong>EVEN</strong> side of non-Snow Emergency Routes.</p>
+					</div>
+					<div class='parking-time'>
+						<p>Rules are in effect from:</p>
+						<strong><p>8 AM - 8 PM</p></strong>
+					</div>
+				</div>
+				<hr class='faint-hr'>
+			</div>
+
+			<!-- Day 3 Container -->
+			<div id='day3'>
+				<button class='day-selector' id='day3-selector' value=3>
+					Day 3 Rules
+					<i class='fa fa-caret-down'></i>
+				</button>
+				<div class='dropdown-container' id='dropdown-container3'>
+					<div class='do'>
+						<p>Park on either side of Snow Emergency Routes or the <strong>EVEN</strong> side of non-Snow Emergency Routes</p>
+					</div>
+					<div class='dont'>
+						<p>Do <strong>NOT</strong> park on the <strong>ODD</strong> side of non-Snow Emergency Routes.</p>
+					</div>
+					<div class='parking-time'>
+						<p>Rules are in effect from:</p>
+						<strong><p>8 AM - 8 PM</p></strong>
+					</div>
+				</div>
+				<hr class='faint-hr'>
+			</div>
+		</div>
+		<div id='official-link'>
+			<a href='http://www.ci.minneapolis.mn.us/snow/snow_parking-info' target='blank'>Official Minneapolis Snow Parking Rules</a>
+		</div>
+	</div>
+</div>
+<script>
+var screenState = '';
+</script>
+<script src='map.js'></script>
+<script src='day-info.js'></script>
+<script>
+	function changeOrientation() {
+	  if ((window.screen.availWidth > window.screen.availHeight) && screenState == 'portrait') {
+	    // switch to landscape
+	    screenState = 'landscape';
+	    // document.getElementById('info-area').style.width = '240px';
+	    // document.getElementById('map').style.marginLeft = '240px';
+			// remove portrait geocoder object
+			var geocoderPortrait = document.getElementById('geocoder-portrait');
+	    geocoderPortrait.removeChild(geocoderPortrait.firstChild);
+			// add geocoder object to landscape layout
+	    document.getElementById('geocoder-landscape').appendChild(geocoder.onAdd(map));
+
+	  } else if ((window.screen.availWidth < window.screen.availHeight) && screenState == 'landscape') {
+	    // switch to portrait
+	    screenState  = 'portrait';
+	    // document.getElementById('map').style.marginLeft = '0px';
+	    // document.getElementById('info-area').style.height = '240px';
+			var geocoderLandscape = document.getElementById('geocoder-landscape');
+			geocoderLandscape.removeChild(geocoderLandscape.firstChild);
+			document.getElementById('geocoder-portrait').appendChild(geocoder.onAdd(map));
+	  } else {
+	    console.log('uh oh something went horribly wrong with tracking the screen state')
+	  }
+	};
+	window.addEventListener('resize', changeOrientation);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,153 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+#map {
+  top: 0;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+  transition: margin-left .5s;
+  margin-left: 240px;
+ }
+#geocoder-landscape {
+  width: 240px;
+  border-radius: 0px;
+  margin-bottom: 2px;
+}
+#geocoder-portrait {
+  display: none;
+}
+.mapboxgl-ctrl-geocoder {
+  min-width:100%;
+}
+#geo-status-fixed {
+  position: fixed;
+  width: 240px;
+  margin-bottom: 2px;
+  z-index: 2;
+}
+.info-landscape {
+  height: 100%;
+  width: 240px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 0px;
+  transition: 0.5s;
+}
+.info-landscape p {
+  padding: 3px 4px 3px 8px;
+  text-decoration: none;
+  font-size: 15px;
+  color: #818181;
+  display: block;
+}
+.info-landscape a {
+  color: white;
+  padding: 4px;
+  font-size: 17px;
+  display: block;
+  text-align: center;
+}
+#snow-emergency-status {
+  position: relative;
+  width: 100%;
+  margin: 2px;
+}
+#snow-emergency-status p {
+  text-align: center;
+  margin: 0px;
+}
+#status-title {
+  padding: 2px 4px 2px 4px;
+  font-size: 120%;
+  color: white;
+}
+#status {
+  padding: 2px 4px 2px 4px;
+}
+#status-text {
+  color: green;
+}
+
+
+.faint-hr {
+  color: #818181
+}
+#day-selector-area {
+  position: absolute;
+  top: 97px;
+  width: 100%;
+}
+/* Style the sidenav links and the dropdown button */
+.day-selector {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #818181;
+  display: block;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+}
+/* On mouse-over */
+.day-selector:hover {
+  color: #f1f1f1;
+}
+
+/* Main content */
+.main {
+  margin-left: 200px; /* Same as the width of the sidenav */
+  font-size: 20px; /* Increased text to enable scrolling */
+  padding: 0px 10px;
+}
+
+/* Add an active class to the active dropdown button */
+.active {
+  background-color: #262626;
+  color: white;
+}
+
+/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+.dropdown-container {
+  display: none;
+  background-color: #262626;
+  color: white;
+  text-align: center;
+}
+.dropdown-container p {
+  color: white;
+  padding: 2px;
+  margin: 2px;
+  font-size: 16px;
+}
+/* Optional: Style the caret down icon */
+.fa-caret-down {
+  float: right;
+  padding-right: 8px;
+}
+/* Style the "Do" section */
+.do {
+  background-color: green;
+  padding: 10px;
+}
+/* Style the "Don't" section */
+.dont {
+  background-color: red;
+  padding: 10px;
+}
+.parking-time {
+  padding: 10px;
+}
+#official-link {
+  bottom: 0px;
+  margin: 10px;
+  position: absolute;
+}
