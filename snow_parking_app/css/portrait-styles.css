@@ -1,36 +1,60 @@
-body { margin:0; padding:0; }
+body { margin: 0; padding: 0; }
 #map {
-  bottom: 0;
-  right: 0;
-  left: 0;
-  transition: margin-left .5s;
-  margin-top: 120px;
- }
-#geocoder-portrait {
   position: relative;
+  bottom: 300px;
+  transition: margin-left .5s;
   width: 100%;
+  height: 100%;
+ }
+ #geo-status-fixed {
+   position: relative;
+   width: auto;
+   height: auto;
+   top: 0px;
+   z-index: 1;
+   background-color: #111;
+ }
+#geocoder {
+  position: relative;
+  width: auto;
   padding: 5px;
 }
-#geocoder-landscape {
-  display: none;
+.mapboxgl-ctrl-geocoder {
+  min-width: 100%;
+}
+#snow-emergency-status {
+  position: relative;
+  text-align: center;
+  background-color: #111;
+}
+#status-title {
+  padding: 2px 4px 2px 4px;
+  font-size: 120%;
+  color: white;
+  margin: 0px;
+}
+#status p {
+  padding: 2px 4px 2px 4px;
+}
+#status-text {
+  color: green;
+  margin: 0px;
+}
+.bold-hr {
+  margin: 5px 0px 0px 0px;
 }
 .faint-hr {
   display: none;
 }
-.mapboxgl-ctrl-geocoder {
-  min-width: 100%;
-  width: 100%;
-}
 .info-area {
-  height: 25%;
   width: 100%;
-  position: relative;
+  height: 300px;
+  position: absolute;
   z-index: 1;
-  bottom: 0;
-  background-color: #111;
+  bottom: 0px;
+
   overflow-x: hidden;
-  padding-top: 0px;
-  transition: 0.5s;
+  background-color: #111;
 }
 .info-area p {
   padding: 3px 4px 3px 8px;
@@ -46,19 +70,42 @@ body { margin:0; padding:0; }
   display: block;
   text-align: center;
 }
-#snow-emergency-status {
+#day-selector-area {
   position: relative;
-  top: 0px;
-  text-align: center;
+  width: 100%;
+  height: 200px;
 }
-#status-title {
-  padding: 2px 4px 2px 4px;
-  font-size: 120%;
+.day-selector {
+  padding: 10px 15px 10px 25px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #818181;
+  display: inline-block;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+}
+/* On mouse-over */
+.day-selector:hover {
+  color: #f1f1f1;
+}
+/* Add an active class to the active dropdown button */
+.active {
+  background-color: #262626;
   color: white;
 }
-#status {
-  padding: 2px 4px 2px 4px;
+/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+.dropdown-container {
+  display: none;
+  background-color: #262626;
+  color: white;
+  text-align: center;
+  transition: height 1.0s ease-out;
 }
-#status-text {
-  color: green;
+
+#official-link {
+  display: none;
 }
