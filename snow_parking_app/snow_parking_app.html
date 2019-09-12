@@ -16,18 +16,17 @@
 
 
 <div>
-	<div id='geocoder-portrait'></div>
 	<div id='geo-status-fixed'>
-		<div id='geocoder-landscape'></div>
+		<div id='geocoder'></div>
 		<div id='snow-emergency-status'> <!-- auto resize text in this div to fit on one line in parent div -->
 			<!-- info button here saying, "A snow emergency will never be declared after X:00 PM"-->
-			<p class='status' id='status-title'><u>Snow Emergency Status:</u></p>
+			<p class='status' id='status-title'>Snow Emergency Status:</p>
 			<p class='status' id='status-text'>No Emergency Declared</p><!-- hook into minneapolis snow emergency API/SMS system -->
 			<hr class='bold-hr'>
 		</div>
 	</div>
-	<div class='info-landscape' id='info-landscape'>
-		<!-- geocoder/search bar goes here -->
+	<div id='map'></div>
+	<div class='info-area' id='info-area'>
 		<div id='day-selector-area'> <!-- I think you Will need JQuery to auto-select the correct button based on emergency status-->
 			<!-- Day 1 Container -->
 			<div id='day1'>
@@ -92,10 +91,10 @@
 			</div>
 		</div>
 		<div id='official-link'>
-			<a href='http://www.ci.minneapolis.mn.us/snow/snow_parking-info' target='blank'>Official Minneapolis Snow Parking Rules</a>
+			<hr class='faint-hr'>
+			<a href='http://www.ci.minneapolis.mn.us/snow/snow_parking-info' target='blank'>Official Minneapolis Snow Emergency Rules 🔗</a>
 		</div>
 	</div>
-	<div id='map'></div>
 </div>
 <script>
 var screenState = '';
@@ -103,6 +102,7 @@ var screenState = '';
 <script src='map.js'></script>
 <script src='day-info.js'></script>
 <script>
+	/*
 	function changeOrientation() {
 	  if ((window.screen.availWidth > window.screen.availHeight) && screenState == 'portrait') {
 	    // switch to landscape
@@ -110,7 +110,7 @@ var screenState = '';
 	    // document.getElementById('info-area').style.width = '240px';
 	    // document.getElementById('map').style.marginLeft = '240px';
 			// remove portrait geocoder object
-			var geocoderPortrait = document.getElementById('geocoder-portrait');
+			var geocoder = document.getElementById('geocoder');
 	    geocoderPortrait.removeChild(geocoderPortrait.firstChild);
 			// add geocoder object to landscape layout
 	    document.getElementById('geocoder-landscape').appendChild(geocoder.onAdd(map));
@@ -124,11 +124,11 @@ var screenState = '';
 			geocoderLandscape.removeChild(geocoderLandscape.firstChild);
 			document.getElementById('geocoder-portrait').appendChild(geocoder.onAdd(map));
 	  } else {
-	    console.log('uh oh something went horribly wrong with tracking the screen state')
-	  }
+	    console.log('uh oh something went horribly wrong with tracking the screen state');
+	  };
 	};
 	window.addEventListener('resize', changeOrientation);
+	*/
 </script>
-
 </body>
 </html>
