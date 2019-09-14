@@ -162,7 +162,7 @@ body { margin: 0; padding: 0; height: 100%; width: 100%;}
   left: 0px;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
-  font-size: 95%;
+  font-size: 90%;
 }
 /* Style the "Don't" section */
 .dont {
@@ -179,7 +179,7 @@ body { margin: 0; padding: 0; height: 100%; width: 100%;}
   position: absolute;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
-  font-size: 95%;
+  font-size: 90%;
 }
 .parking-time {
   position: absolute;
