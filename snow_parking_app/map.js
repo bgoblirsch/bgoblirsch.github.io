@@ -61,7 +61,7 @@ var city_boundary = [
   [-93.19386,44.89015]
 ];
 
-var geoStatusHeight = document.getElementById('geo-status-fixed');
+var geoStatusHeight = document.getElementById('info-area');
 
 // initialize map
 var map = new mapboxgl.Map({
@@ -71,8 +71,6 @@ var map = new mapboxgl.Map({
   zoom: 11, // starting zoom
   minZoom: 11
 });
-
-// document.getElementById('map').style.top = geoStatusHeight;
 
 // geocoder object
 var geocoder = new MapboxGeocoder({
@@ -84,17 +82,16 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 // Set Screen state
 // Add compass to the map; zoom if landscape.
 if (window.screen.availHeight > window.screen.availWidth) {
-  screenState = 'portrait';
   var displayZoom = false;
 }
 else {
-  screenState = 'landscape';
   var displayZoom = true;
 };
 
 // Add zoom controlls
 var nav = new mapboxgl.NavigationControl({showZoom: displayZoom});
 map.addControl(nav, 'bottom-right');
+
 
 
 // Add/remove zoom on orientation change
@@ -104,7 +101,14 @@ window.addEventListener("orientationchange", function() {
   nav = new mapboxgl.NavigationControl({showZoom: displayZoom});
   map.addControl(nav, 'bottom-right');
   changeDayButtonContent()
+  if (window.screen.availHeight > window.screen.availWidth) {
+    document.getElementById('map').style.top = geoStatusHeight;
+  }
 });
+
+if (window.screen.availHeight > window.screen.availWidth) {
+  document.getElementById('map').style.top = geoStatusHeight;
+}
 
 // Disable Map Rotation. Touch Rotation is still enabled, this is just to dissuade tilting.
 map.dragRotate.disable();
@@ -144,6 +148,7 @@ map.on('load', function () {
   // map.addSource(snow_route_data);
   map.addLayer(testData);
   document.getElementById('day1-selector').click();
+  geolocate.trigger();
   // if (y > x) {prompt for location} else {point at search}
 });
 
