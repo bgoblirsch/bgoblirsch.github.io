@@ -12,7 +12,7 @@ body {
  }
  #geo-status-fixed {
    position: relative;
-   width: 240px;
+   width: 240;
    height: auto;
    left: 0px;
    top: 0px;

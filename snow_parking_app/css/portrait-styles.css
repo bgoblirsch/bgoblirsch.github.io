@@ -1,15 +1,15 @@
-body { margin: 0; padding: 0; }
+body { margin: 0; padding: 0; height: 100%; width: 100%;}
 #map {
   position: relative;
-  bottom: 300px;
   transition: margin-left .5s;
   width: 100%;
   height: 100%;
+  bottom: 25%;
+  background-color: red;
  }
  #geo-status-fixed {
    position: relative;
    width: auto;
-   height: auto;
    top: 0px;
    z-index: 1;
    background-color: #111;
@@ -28,31 +28,34 @@ body { margin: 0; padding: 0; }
   background-color: #111;
 }
 #status-title {
-  padding: 2px 4px 2px 4px;
-  font-size: 120%;
+  padding: 2px 0px 2px 2px;
+  font-size: 100%;
   color: white;
   margin: 0px;
-}
-#status p {
-  padding: 2px 4px 2px 4px;
+  display: inline;
+  width: 50%;
 }
 #status-text {
   color: green;
   margin: 0px;
+  padding: 2px 2px 2px 0px;
+  font-size: 90%;
+  width: 50%;
+  display: inline;
 }
 .bold-hr {
   margin: 5px 0px 0px 0px;
+  bottom: 0px;
 }
 .faint-hr {
   display: none;
 }
 .info-area {
   width: 100%;
-  height: 300px;
+  height: 25%;
   position: absolute;
   z-index: 1;
   bottom: 0px;
-
   overflow-x: hidden;
   background-color: #111;
 }
@@ -71,22 +74,45 @@ body { margin: 0; padding: 0; }
   text-align: center;
 }
 #day-selector-area {
-  position: relative;
+  position: absolute;
+  bottom: 0px;
   width: 100%;
-  height: 200px;
+  height: 100%;
+  overflow-x: auto;
+}
+.day {
+  display: inline-block;
+  bottom: 0px;
 }
 .day-selector {
-  padding: 10px 15px 10px 25px;
+  position: absolute;
+  bottom: 0px;
+  width: 33.4%;
+  height: 30%;
   text-decoration: none;
+  padding: 10px 0px;
   font-size: 20px;
   color: #818181;
+  border-color: white;
+  border-width: 2px;
+  border-style: solid;
   display: inline-block;
-  border: none;
   background: none;
-  width: 100%;
   text-align: center;
   cursor: pointer;
   outline: none;
+}
+#day1-selector {
+  left: 0px;
+  position: absolute;
+}
+#day2-selector {
+  left: 33.3%;
+  position: absolute;
+}
+#day3-selector {
+  right: 0px;
+  position: absolute;
 }
 /* On mouse-over */
 .day-selector:hover {
@@ -94,16 +120,88 @@ body { margin: 0; padding: 0; }
 }
 /* Add an active class to the active dropdown button */
 .active {
-  background-color: #262626;
-  color: white;
+  background-color: #8a8a8a;
+  color: black;
 }
 /* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
 .dropdown-container {
   display: none;
+  position: absolute;
   background-color: #262626;
   color: white;
   text-align: center;
   transition: height 1.0s ease-out;
+  bottom: 30%;
+  top: 0px;
+  width: 100%;
+  left: 0px;
+}
+.dropdown-container span {
+  color: white;
+  padding: 2px;
+  margin: 2px;
+}
+/* Optional: Style the caret down icon */
+.fa-caret-down {
+  float: right;
+  padding-right: 8px;
+}
+/* Style the "Do" section */
+.do {
+  top: 0px;
+  left: 0px;
+  height: 67%;
+  width: 50%;
+  position: absolute;
+  background-color: green;
+}
+.do span {
+  margin: 3px;
+  position: absolute;
+  top: 50%;
+  left: 0px;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+/* Style the "Don't" section */
+.dont {
+  top: 0px;
+  right: 0px;
+  height: 67%;
+  width: 50%;
+  position: absolute;
+  background-color: red;
+}
+.dont span {
+  right: 0px;
+  top: 50%;
+  position: absolute;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.parking-time {
+  position: absolute;
+  width: 100%;
+  height: 33%;
+  padding: 2px;
+  bottom: 0px;
+}
+.parking-time span {
+  top: 50%;
+  display: inline-block;
+  position: relative;
+  margin: 2px 0px;
+  padding: 2px 0px;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  font-size: 2.8vw;
+}
+.flexFont {
+    height:8em;
+    width:75%;
+    background-color:#eeeeee;
+    padding:1%;
+    margin: 10px;
 }
 
 #official-link {
