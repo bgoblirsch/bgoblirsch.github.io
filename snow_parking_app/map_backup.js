@@ -17,11 +17,6 @@ function closeNav() {
   document.getElementById('map').style.marginLeft = '0';
 }
 
-// Sleep functionality
-const sleep = (milliseconds) => {
-  return new Promise(resolve => setTimeout(resolve, milliseconds))
-}
-
 // if (landscape) { "Day 1 Info v"} else {"Day 1"}
 function changeDayButtonContent() {
   var dayButtons = document.getElementsByClassName('day-selector');
@@ -85,16 +80,12 @@ var geocoder = new MapboxGeocoder({
 var geocoderHTML = document.getElementById('geocoder');
 geocoderHTML.appendChild(geocoder.onAdd(map));
 
-var geoStatusHeight = document.getElementById('geo-status-fixed').offsetHeight;
-
 // var displayZoom determines whether or not to include zoom controls on map
 if (isPortrait()) {
   var displayZoom = false;
 }
 else {
   var displayZoom = true;
-  document.getElementById('info-area').style.top = geoStatusHeight;
-  document.getElementById('map').style.top = 0;
 };
 // Add compass to map (& zoom if landscape)
 var nav = new mapboxgl.NavigationControl({showZoom: displayZoom});
@@ -108,21 +99,20 @@ window.addEventListener("orientationchange", function() {
   nav = new mapboxgl.NavigationControl({showZoom: displayZoom});
   map.addControl(nav, 'bottom-right');
   changeDayButtonContent()
-  if ( !isPortrait() ) {
-    document.getElementById('map').style.top = 0;
-    sleep(100).then(() => {
-      geoStatusHeight = document.getElementById('geo-status-fixed').offsetHeight;
-      document.getElementById('info-area').style.top = geoStatusHeight;
-    })
+  //if (!isPortrait) {
+  //  document.getElementById('info-area').style.top = geoStatusHeight;
+  //}
+  var geoStatusHeight = document.getElementById('geo-status-fixed').offsetHeight;
+  if (isPortrait()) {
+    document.getElementById('map').style.top = geoStatusHeight;
   } else {
-    document.getElementById('info-area').style.top = "";
-    sleep(100).then(() => {
-      geoStatusHeight = document.getElementById('geo-status-fixed').offsetHeight;
-      document.getElementById('map').style.top = geoStatusHeight;
-
-    })
+    document.getElementById('info-area').style.top = geoStatusHeight;
   }
 });
+
+if (!isPortrait()) {
+  document.getElementById('map').style.top = 0;
+}
 
 // Disable Map Rotation. Touch Rotation is still enabled, this is just to dissuade tilting.
 map.dragRotate.disable();
@@ -155,6 +145,14 @@ var testData = {
     "line-width": 1
   }
 };
+
+var geoStatusHeight = document.getElementById('geo-status-fixed').offsetHeight;
+if (isPortrait) {
+  document.getElementById('map').style.top = geoStatusHeight;
+} else {
+  document.getElementById('info-area').style.top = geoStatusHeight;
+}
+
 
 changeDayButtonContent();
 map.on('load', function () {
