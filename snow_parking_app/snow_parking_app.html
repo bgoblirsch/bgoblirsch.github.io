@@ -8,9 +8,9 @@
 	<script src="jquery-textfill-master/dist/jquery.textfill.min.js"></script>
 	<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.css' rel='stylesheet' />
 	<link href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.css' rel='stylesheet' type='text/css' />
-	<link href="font-awesome/css/all.css" rel="stylesheet"> <!--load all styles -->
-	<link href="css/landscape-styles.css" rel="stylesheet" media="all and (orientation: landscape)">
-	<link href="css/portrait-styles.css" rel="stylesheet" media="all and (orientation: portrait)">
+	<link href="font-awesome/css/all.css" rel="stylesheet" type='text/css'> <!--load all styles -->
+	<link href="css/landscape-styles.css" rel="stylesheet" media="all and (orientation: landscape)" type='text/css'>
+	<link href="css/portrait-styles.css" rel="stylesheet" media="all and (orientation: portrait)" type='text/css'>
 </head>
 
 <body>
@@ -23,8 +23,8 @@
 		<div id='snow-emergency-status'> <!-- auto resize text in this div to fit on one line in parent div -->
 			<!-- info button here saying, "A snow emergency will never be declared after X:00 PM"-->
 			<!-- i think these two p elements should be wrapped in divs, width = 50%, and font-auto scale in size to fit -->
-			<p class='status' id='status-title'>Snow Emergency Status:</p>
-			<p class='status' id='status-text'>No Emergency Declared</p><!-- hook into minneapolis snow emergency API/SMS system -->
+			<span class='status' id='status-title'>Snow Emergency Status:</span>
+			<span class='status' id='status-text'>No Emergency Declared</span><!-- hook into minneapolis snow emergency API/SMS system -->
 			<hr class='bold-hr'>
 		</div>
 	</div>
@@ -89,10 +89,12 @@
 				<hr class='faint-hr'>
 			</div>
 		</div>
+		<!-- Official Link ~~~~ move to menu/settings/more
 		<div id='official-link'>
 			<hr class='faint-hr'>
 			<a href='http://www.ci.minneapolis.mn.us/snow/snow_parking-info' target='blank'>Official Minneapolis Snow Emergency Rules 🔗</a>
 		</div>
+		-->
 	</div>
 </div>
 <script src='map.js'></script>

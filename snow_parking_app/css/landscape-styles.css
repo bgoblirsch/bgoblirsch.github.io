@@ -1,3 +1,6 @@
+/*
+* === BODY & MAP ===
+*/
 body {
   margin: 0;
   padding: 0;
@@ -6,40 +9,44 @@ body {
   top: 0px;
   bottom: 0px;
   right: 0px;
-  margin-left: 240px;
+  margin-left: 25%;
   height: 100%;
   transition: margin-left .5s;
  }
+ @media all and (min-width: 240px) {
+   #map {
+     margin-left: 240px;
+   }
+ }
+
+ /*
+* === GEOCODER & STATUS AREA ===
+*/
  #geo-status-fixed {
-   position: relative;
-   width: 240;
-   height: auto;
+   position: absolute;
+   width: 25%;
+   min-width: 240px;
    left: 0px;
    top: 0px;
-   z-index: 2;
    background-color: #111;
    display: inline;
  }
 #geocoder {
-  width: 240px;
-  margin-bottom: 2px;
-  position: absolute;
+  position: relative;
+  width: 100%;
 }
 .mapboxgl-ctrl-geocoder {
+  border-radius: 0;
   min-width:100%;
 }
 #snow-emergency-status {
-  position: absolute;
-  width: 240px;
-  top: 36px;
+  position: relative;
+  width: 100%;
   background-color: #111;
-}
-#snow-emergency-status p {
   text-align: center;
-  margin: 0px;
 }
 #status-title {
-  padding: 2px 4px 2px 4px;
+  margin: 2px 4px 2px 4px;
   font-size: 120%;
   color: white;
 }
@@ -47,8 +54,20 @@ body {
   padding: 2px 4px 2px 4px;
 }
 #status-text {
-  color: green;
+  background-color: green;
+  color: white;
+  padding: 2px 8px;
+  display: inline-block;
+  margin-bottom: 2px;
 }
+.bold-hr {
+  margin: 0;
+  margin-top: 4px;
+}
+
+/*
+* === INFO AREA ===
+*/
 .faint-hr {
   color: #818181;
   margin: 0px;
@@ -57,16 +76,13 @@ body {
   position: absolute;
   width: 100%;
 }
-.bold-hr {
-  margin: 0px;
-  margin-top: 4px;
-}
 .info-area {
-  width: 240px;
   position: absolute;
+  width: 25%;
+  min-width: 240px;
   z-index: 1;
-  bottom: 48px;
-  top: 86.5px;
+  top: 0;
+  bottom: 0;
   left: 0;
   background-color: #111;
   overflow-x: hidden;
@@ -88,6 +104,10 @@ body {
   display: block;
   text-align: center;
 }
+
+/*
+* — Day Selector Buttons & Info —
+*/
 /* Style the sidenav links and the dropdown button */
 .day-selector {
   padding: 10px 15px 10px 25px;
@@ -142,12 +162,4 @@ body {
 }
 .parking-time {
   padding: 2px;
-}
-#official-link {
-  bottom: 0px;
-  left: 0px;
-  position: fixed;
-  width: 240px;
-  text-align: center;
-  background-color: #111;
 }
