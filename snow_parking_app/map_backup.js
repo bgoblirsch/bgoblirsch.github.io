@@ -186,6 +186,7 @@ for (i = 0; i < dropdown.length; i++) {
       this.classList.toggle('active');
       dropdownContent.style.display = 'none';
       map.setLayoutProperty('test-data', 'visibility', 'none');
+      document.getElementById('map').style.bottom = '7.5%';
     }
     else {
       // else loop through all buttons, deactive them, and hide content accordingly

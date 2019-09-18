@@ -2,6 +2,10 @@
 //  - UI Functions
 //  - map Functions
 //  - main() / code file
+//
+// Should try to pull out some repeated code as functions
+// - for example, would make fixing this like this easier:
+//   + when nothing is selected, then screen is rotated to portrait, map does expand like it should
 
 
 // ############ //
@@ -107,13 +111,14 @@ window.addEventListener("orientationchange", function() {
   displayZoom = !displayZoom;
   nav = new mapboxgl.NavigationControl({showZoom: displayZoom});
   map.addControl(nav, 'bottom-right');
-  changeDayButtonContent()
+  changeDayButtonContent();
   if ( !isPortrait() ) {
+    document.getElementById('info-area').style.height = "";
     document.getElementById('map').style.top = 0;
     sleep(100).then(() => {
       geoStatusHeight = document.getElementById('geo-status-fixed').offsetHeight;
       document.getElementById('info-area').style.top = geoStatusHeight;
-    })
+    });
   } else {
     document.getElementById('info-area').style.top = "";
     sleep(100).then(() => {
@@ -188,11 +193,31 @@ for (i = 0; i < dropdown.length; i++) {
       this.classList.toggle('active');
       dropdownContent.style.display = 'none';
       map.setLayoutProperty('test-data', 'visibility', 'none');
+      // if portrait, shrink info-area, resize buttons, and resize map
+      if ( isPortrait() ) {
+        document.getElementById('map').style.bottom = '7.5%';
+        document.getElementById('info-area').style.height = '7.5%';
+        for (i = 0; i < dropdown.length; i++) {
+          dropdown[i].style.height = '100%';
+        }
+
+        sleep(400).then(() => {
+          map.resize();
+        })
+      }
     }
     else {
+      if ( isPortrait() ) {
+        document.getElementById('map').style.bottom = '25%';
+        document.getElementById('info-area').style.height = '25%';
+      }
       // else loop through all buttons, deactive them, and hide content accordingly
       for (j = 0; j < dropdown.length; j++) {
+        if ( isPortrait() ) {
+          dropdown[j].style.height = '30%';
+        }
         if (dropdown[j].classList.value.includes('active')) {
+          // if portrait, uncompress buttons/info-area and resize map
           dropdown[j].classList.toggle('active');
           var iterDropdownContent = dropdown[j].nextElementSibling;
           iterDropdownContent.style.display = 'none';
