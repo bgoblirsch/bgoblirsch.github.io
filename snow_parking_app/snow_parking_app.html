@@ -10,7 +10,7 @@
 	<link href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.css' rel='stylesheet' type='text/css' />
 	<link href="font-awesome/css/all.css" rel="stylesheet" type='text/css'> <!--load all styles -->
 
-	<link href="css/landscape-styles.css" rel="stylesheet" media="all and (orientation: landscape)" type='text/css'>
+	<link href="css/landscape-styles.css" rel="stylesheet" media="all and (min-aspect-ratio: 13/9)" type='text/css'>
 	<link href="css/portrait-styles.css" rel="stylesheet" media="all and (orientation: portrait)" type='text/css'>
 	<!--
 	<link href="css/landscape-styles.css" rel="stylesheet" media="all and (min-aspect-ratio: 13/9)" type='text/css'>
@@ -31,7 +31,7 @@
 			<!-- info button here saying, "A snow emergency will never be declared after X:00 PM"-->
 			<!-- i think these two p elements should be wrapped in divs, width = 50%, and font-auto scale in size to fit -->
 			<span class='status' id='status-title'>Snow Emergency Status:</span>
-			<span class='status' id='status-text'>No Emergency Declared</span><!-- hook into minneapolis snow emergency API/SMS system -->
+			<span class='status' id='status-text'><strong>No Emergency Declared</strong></span><!-- hook into minneapolis snow emergency API/SMS system -->
 		</div>
 		<!-- <hr class='bold-hr'> -->
 	</div>
