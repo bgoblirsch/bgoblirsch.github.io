@@ -52,6 +52,8 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
   font-size: 90%;
   width: 50%;
   display: inline;
+  -webkit-text-stroke: 0.5px black;
+  -moz-text-stroke: 0.5px black;
 }
 .bold-hr {
   margin: 5px 0px 0px 0px;
@@ -176,6 +178,8 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
   width: 50%;
   position: absolute;
   background-color: green;
+  -webkit-text-stroke: 0.5px black;
+  -moz-text-stroke: 0.5px black;
 }
 .do span {
   margin: 3px;
@@ -194,6 +198,8 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
   width: 50%;
   position: absolute;
   background-color: red;
+  -webkit-text-stroke: 0.5px black;
+  -moz-text-stroke: 0.5px black;
 }
 .dont span {
   right: 0px;

@@ -13,6 +13,11 @@ body {
   height: 100%;
   transition: margin-left .5s;
  }
+ @media all and (max-width: 960px) {
+    #map {
+      margin-left: 240px;
+    }
+ }
  /*
 * === GEOCODER & STATUS AREA ===
 */
@@ -40,16 +45,13 @@ body {
   background-color: #111;
   text-align: center;
   color: white;
-  text-shadow:
-    -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-    1px 1px 0 #000;
+  border-bottom: 1px white solid;
 }
 #status-title {
   margin: 2px 4px 2px 4px;
-  font-size: 120%;
+  font-size: 110%;
   color: white;
+  display: block;
 }
 #status {
   padding: 2px 4px 2px 4px;
@@ -59,7 +61,10 @@ body {
   color: white;
   padding: 2px 8px;
   display: inline-block;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
+  font-size: 110%;
+  -webkit-text-stroke: 0.5px black;
+  -moz-text-stroke: 0.5px black;
 }
 .bold-hr {
   margin: 0;
@@ -113,7 +118,7 @@ body {
 .day-selector {
   padding: 10px 15px 10px 25px;
   text-decoration: none;
-  font-size: 20px;
+  font-size: 150%;
   color: #818181;
   display: block;
   border: none;
@@ -155,13 +160,20 @@ body {
 /* Style the "Do" section */
 .do {
   background-color: green;
-  padding: 2px;
+  padding: 5px;
+  -webkit-text-stroke: 0.5px black;
+  -moz-text-stroke: 0.5px black;
 }
 /* Style the "Don't" section */
 .dont {
   background-color: red;
-  padding: 2px;
+  padding: 5px;
+  -webkit-text-stroke: 0.5px black;
+  -moz-text-stroke: 0.5px black;
 }
 .parking-time {
-  padding: 2px;
+  padding: 5px;
+}
+.day2-3-time {
+  white-space: nowrap;
 }
