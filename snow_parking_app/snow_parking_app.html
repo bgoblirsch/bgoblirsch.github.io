@@ -9,15 +9,22 @@
 	<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.css' rel='stylesheet' />
 	<link href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.css' rel='stylesheet' type='text/css' />
 	<link href="font-awesome/css/all.css" rel="stylesheet" type='text/css'> <!--load all styles -->
+
 	<link href="css/landscape-styles.css" rel="stylesheet" media="all and (orientation: landscape)" type='text/css'>
 	<link href="css/portrait-styles.css" rel="stylesheet" media="all and (orientation: portrait)" type='text/css'>
+	<!--
+	<link href="css/landscape-styles.css" rel="stylesheet" media="all and (min-aspect-ratio: 13/9)" type='text/css'>
+	<link href="css/portrait-styles.css" rel="stylesheet" media="all and (max-aspect-ratio: 13/9)" type='text/css'>
+-->
+  <!-- Font Import -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat|Roboto&display=swap" rel="stylesheet">
 </head>
 
 <body>
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.min.js'></script>
 
 
-<div style='height: 100%'>
+<div id='main-app-wrapper' style='height: 100%'>
 	<div id='geo-status-fixed'>
 		<div id='geocoder'></div>
 		<div id='snow-emergency-status'> <!-- auto resize text in this div to fit on one line in parent div -->
@@ -25,8 +32,8 @@
 			<!-- i think these two p elements should be wrapped in divs, width = 50%, and font-auto scale in size to fit -->
 			<span class='status' id='status-title'>Snow Emergency Status:</span>
 			<span class='status' id='status-text'>No Emergency Declared</span><!-- hook into minneapolis snow emergency API/SMS system -->
-			<hr class='bold-hr'>
 		</div>
+		<!-- <hr class='bold-hr'> -->
 	</div>
 	<div id='map'></div>
 	<div class='info-area' id='info-area'>
@@ -40,10 +47,10 @@
 						<span>Park in any valid parking spot on non-Snow Emergency Routes.</span>
 					</div>
 					<div class='dont'>
-						<span>Do <strong>NOT</strong> park on either side of a Snow Emergency Route.</span>
+						<span>Do NOT park on either side of a Snow Emergency Route.</span>
 					</div>
 					<div class='parking-time'>
-						<span>From 9 PM when the emergency is declared until 8 AM the following morning.</span>
+						<span class='day1-time'>Day 1 Rules start at 9 PM and end at 8 AM the following morning.</span>
 					</div>
 				</div>
 				<hr class='faint-hr'>
@@ -56,14 +63,14 @@
 				</button>
 				<div class='dropdown-container' id='dropdown-container2'>
 					<div class='do'>
-						<span>Park on either side of Snow Emergency Routes or the <strong>ODD</strong> side of non-Snow Emergency Routes.</span>
+						<span>Park on either side of Snow Emergency Routes or the ODD side of non-Snow Emergency Routes.</span>
 					</div>
 					<div class='dont'>
-						<span>Do <strong>NOT</strong> park on the <strong>EVEN</strong> side of non-Snow Emergency Routes.</span>
+						<span>Do NOT park on the EVEN side of non-Snow Emergency Routes.</span>
 					</div>
 					<div class='parking-time'>
 						<span>Rules are in effect from:</span>
-						<strong><span>8 AM - 8 PM</span></strong>
+						<strong><span class='day2-3-time'>8 AM - 8 PM</span></strong>
 					</div>
 				</div>
 				<hr class='faint-hr'>
@@ -76,14 +83,14 @@
 				</button>
 				<div class='dropdown-container' id='dropdown-container3'>
 					<div class='do'>
-						<span>Park on either side of Snow Emergency Routes or the <strong>EVEN</strong> side of non-Snow Emergency Routes</span>
+						<span>Park on either side of Snow Emergency Routes or the EVEN side of non-Snow Emergency Routes</span>
 					</div>
 					<div class='dont'>
-						<span>Do <strong>NOT</strong> park on the <strong>ODD</strong> side of non-Snow Emergency Routes.</span>
+						<span>Do NOT park on the ODD side of non-Snow Emergency Routes.</span>
 					</div>
 					<div class='parking-time'>
 						<span>Rules are in effect from:</span>
-						<strong><span>8 AM - 8 PM</span></strong>
+						<strong><span class='day2-3-time'>8 AM - 8 PM</span></strong>
 					</div>
 				</div>
 				<hr class='faint-hr'>

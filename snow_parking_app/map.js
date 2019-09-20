@@ -8,14 +8,19 @@
 //   + when nothing is selected, then screen is rotated to portrait, map does expand like it should
 
 
+// Init Variables
+
+// Get HTML head element to use for loading css files
+var head = document.getElementsByTagName('HEAD')[0];
+
 // ############ //
 // ############ //
 // UI Functions //
 // ############ //
 // ############ //
 
-// THIS IS CURRENTLY NOT USED
 // Set the width of the side navigation to 0 and the left margin of the page content to 0
+// THIS IS CURRENTLY NOT USED
 function closeNav() {
   document.getElementById('info-area').style.width = '0';
   document.getElementById('map').style.marginLeft = '0';
@@ -48,6 +53,15 @@ function isPortrait() {
     return true;
   }
   else { return false; }
+}
+
+// Should make this a function for better reuseability and readability
+// extract form orientationchange listener
+function changeOrientation() {
+  var isPortrait = isPortrait();
+  if (isPortrait) {
+    //
+  }
 }
 
 // ############# //
@@ -88,6 +102,29 @@ var geocoder = new MapboxGeocoder({
 });
 var geocoderHTML = document.getElementById('geocoder');
 geocoderHTML.appendChild(geocoder.onAdd(map));
+
+/*
+// Listeners for search bar
+var searchBar = document.getElementsByClassName('mapboxgl-ctrl-geocoder--input')[0];
+searchBar.onfocus = function() {
+  if ( isPortrait() ) {
+    // Load portrait css sheet
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = 'css/portrait-styles.css';
+    head.appendChild(link);
+    // Hide map and info area
+    document.getElementById('map').style.display = 'none';
+    document.getElementById('info-area').style.display = 'none';
+
+  }
+};
+searchBar.onblur = function() {conso
+  document.getElementById('map').style.display = 'block';
+  document.getElementById('info-area').style.display = 'block';
+};
+*/
 
 var geoStatusHeight = document.getElementById('geo-status-fixed').offsetHeight;
 
@@ -162,6 +199,12 @@ var testData = {
 };
 
 changeDayButtonContent();
+if ( !isPortrait() ) {
+  sleep(100).then(() => {
+    geoStatusHeight = document.getElementById('geo-status-fixed').offsetHeight;
+    document.getElementById('info-area').style.top = geoStatusHeight;
+  });
+}
 map.on('load', function () {
   // Add road data
   // map.addSource(snow_route_data);
@@ -252,11 +295,11 @@ for (i = 0; i < dropdown.length; i++) {
   });
 }
 
+/*
 // Add a listener for geocoder focus
 geocoderHTML.addEventListener('focus', function() {
   if (isPortrait) {
-    // Get HTML head element
-    var head = document.getElementsByTagName('HEAD')[0];
+    console.log('aye lmao');
 
     // Create new link Element
     var link = document.createElement('link');
@@ -271,6 +314,8 @@ geocoderHTML.addEventListener('focus', function() {
     // prevent screen rotation
   }
   else {
+        console.log('aye lmmmmmaaaaaaoooooo');
     // expand sidebar to ~40% screen width or do nothing???
   }
 })
+*/

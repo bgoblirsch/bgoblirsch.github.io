@@ -13,23 +13,23 @@ body {
   height: 100%;
   transition: margin-left .5s;
  }
- @media all and (min-width: 240px) {
-   #map {
-     margin-left: 240px;
-   }
+ @media all and (max-width: 960px) {
+    #map {
+      margin-left: 240px;
+    }
  }
-
  /*
 * === GEOCODER & STATUS AREA ===
 */
  #geo-status-fixed {
    position: absolute;
-   width: 25%;
    min-width: 240px;
+   width: 25%;
    left: 0px;
    top: 0px;
    background-color: #111;
    display: inline;
+   font-family: 'Montserrat', sans-serif;
  }
 #geocoder {
   position: relative;
@@ -44,11 +44,14 @@ body {
   width: 100%;
   background-color: #111;
   text-align: center;
+  color: white;
+  border-bottom: 1px white solid;
 }
 #status-title {
   margin: 2px 4px 2px 4px;
-  font-size: 120%;
+  font-size: 110%;
   color: white;
+  display: block;
 }
 #status {
   padding: 2px 4px 2px 4px;
@@ -58,7 +61,10 @@ body {
   color: white;
   padding: 2px 8px;
   display: inline-block;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
+  font-size: 110%;
+  -webkit-text-stroke: 0.5px black;
+  -moz-text-stroke: 0.5px black;
 }
 .bold-hr {
   margin: 0;
@@ -80,7 +86,6 @@ body {
   position: absolute;
   width: 25%;
   min-width: 240px;
-  z-index: 1;
   top: 0;
   bottom: 0;
   left: 0;
@@ -89,6 +94,7 @@ body {
   overflow-y: auto;
   padding-top: 0px;
   transition: 0.5s;
+  font-family: 'Roboto', sans-serif;
 }
 .info-area p {
   padding: 3px 4px 3px 8px;
@@ -112,7 +118,7 @@ body {
 .day-selector {
   padding: 10px 15px 10px 25px;
   text-decoration: none;
-  font-size: 20px;
+  font-size: 150%;
   color: #818181;
   display: block;
   border: none;
@@ -121,6 +127,7 @@ body {
   text-align: left;
   cursor: pointer;
   outline: none;
+  font-family: 'Montserrat', sans-serif;
 }
 /* On mouse-over */
 .day-selector:hover {
@@ -153,13 +160,20 @@ body {
 /* Style the "Do" section */
 .do {
   background-color: green;
-  padding: 2px;
+  padding: 5px;
+  -webkit-text-stroke: 0.5px black;
+  -moz-text-stroke: 0.5px black;
 }
 /* Style the "Don't" section */
 .dont {
   background-color: red;
-  padding: 2px;
+  padding: 5px;
+  -webkit-text-stroke: 0.5px black;
+  -moz-text-stroke: 0.5px black;
 }
 .parking-time {
-  padding: 2px;
+  padding: 5px;
+}
+.day2-3-time {
+  white-space: nowrap;
 }

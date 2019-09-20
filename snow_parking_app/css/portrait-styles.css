@@ -21,6 +21,7 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
    z-index: 1;
    background-color: #111;
    transition: .5s ease-out;
+   font-family: 'Montserrat', sans-serif;
  }
 #geocoder {
   position: relative;
@@ -51,6 +52,8 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
   font-size: 90%;
   width: 50%;
   display: inline;
+  -webkit-text-stroke: 0.5px black;
+  -moz-text-stroke: 0.5px black;
 }
 .bold-hr {
   margin: 5px 0px 0px 0px;
@@ -70,6 +73,7 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
   bottom: 0px;
   overflow-x: hidden;
   background-color: #111;
+  font-family: 'Roboto', sans-serif;
 }
 .info-area p {
   padding: 3px 4px 3px 8px;
@@ -116,6 +120,7 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
   text-align: center;
   cursor: pointer;
   outline: none;
+  font-family: 'Montserrat', sans-serif;
 }
 #day1-selector {
   left: 0px;
@@ -173,6 +178,8 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
   width: 50%;
   position: absolute;
   background-color: green;
+  -webkit-text-stroke: 0.5px black;
+  -moz-text-stroke: 0.5px black;
 }
 .do span {
   margin: 3px;
@@ -191,6 +198,8 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
   width: 50%;
   position: absolute;
   background-color: red;
+  -webkit-text-stroke: 0.5px black;
+  -moz-text-stroke: 0.5px black;
 }
 .dont span {
   right: 0px;

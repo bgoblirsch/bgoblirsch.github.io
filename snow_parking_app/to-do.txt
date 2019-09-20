@@ -1,23 +1,10 @@
 To Do:
-+ move CSS to separate file
 + add disclaimer, privacy policy, etc.
   - Any parking signs override information found here. Do not soley rely on this application to determining where to park. You are ultimately responsible for parking properly so always have some situatioonal awareness of the sithuation. This app can only assist you in navigating Minneapolis's Snow Emergency System.   Dealing with the parking rules is no fun, but it allows the snow plows to do their job.
 + avoid dedicated application; see if notifications would be possible through browser or some other means
 	- maybe even just direct them to signup for official mpls notifications
 + add ability to switch basemap (non-mvp)
 + host your own tiles with postgis? (non-mvp)
-+ Auto-detect mobile/desktop and adjust accordingly
-	- is this feasible?
-	 	if (x > y) { desktop; } else { mobile ;}
-	- if (mobile) { 
-			hideZoomButtons();
-			drawSearchBarInMap();
-			footerButtons();
-		}
-		else {
-		sideBar{}
-	}
-+ Add detect location prompt; let user select just once or always; add little i for more info -> we value your privacy, etc.
 + restrict map to mpls
 + Add home button - zooms to extent of Minneapolis
 + finish acquiring data from mpls; optimize if possible (remove erraneous pts, etc. [non-mvp])
