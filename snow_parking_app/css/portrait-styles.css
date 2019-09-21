@@ -176,8 +176,8 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
   left: 0px;
   height: 67%;
   width: calc(50% - 10px);
-  background-color: #111;
-  border-color: green;
+  background-color: #133318;
+  border-color: #5abf70;
   border-width: 5px;
   border-style: solid;
 }
@@ -197,8 +197,8 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
   right: 0px;
   height: 67%;
   width: calc(50% - 10px);
-  background-color: #111;
-  border-color: red;
+  background-color: #801f1f;
+  border-color: #e35d71;
   border-width: 5px;
   border-style: solid;
 }
@@ -209,6 +209,7 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
   font-size: 90%;
+  color: white;
 }
 .parking-time {
   position: absolute;
