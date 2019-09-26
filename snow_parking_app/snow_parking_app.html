@@ -10,8 +10,8 @@
 	<link href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.css' rel='stylesheet' type='text/css' />
 	<link href="font-awesome/css/all.css" rel="stylesheet" type='text/css'> <!--load all styles -->
 
-	<link href="css/landscape-styles.css" rel="stylesheet" media="all and (min-aspect-ratio: 13/9)" type='text/css'>
-	<link href="css/portrait-styles.css" rel="stylesheet" media="all and (orientation: portrait)" type='text/css'>
+	<!-- <link href="css/landscape-styles.css" rel="stylesheet" media="all and (orientation: landscape)" type='text/css'> -->
+	<link href="css/portrait-styles.css" rel="stylesheet" type='text/css'>
 	<!--
 	<link href="css/landscape-styles.css" rel="stylesheet" media="all and (min-aspect-ratio: 13/9)" type='text/css'>
 	<link href="css/portrait-styles.css" rel="stylesheet" media="all and (max-aspect-ratio: 13/9)" type='text/css'>
@@ -24,85 +24,81 @@
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.min.js'></script>
 
 
-<div id='main-app-wrapper' style='height: 100%'>
-	<div id='geo-status-fixed'>
+<div class='wrapper'>
+	<div id='geo-status-area'>
 		<div id='geocoder'></div>
-		<div id='snow-emergency-status'> <!-- auto resize text in this div to fit on one line in parent div -->
+		<div id='status-area'> <!-- auto resize text in this div to fit on one line in parent div -->
 			<!-- info button here saying, "A snow emergency will never be declared after X:00 PM"-->
 			<!-- i think these two p elements should be wrapped in divs, width = 50%, and font-auto scale in size to fit -->
-			<span class='status' id='status-title'>Snow Emergency Status:</span>
-			<span class='status' id='status-text'><strong>No Emergency Declared</strong></span><!-- hook into minneapolis snow emergency API/SMS system -->
+			<span class='resize' id='status-title'>Snow Emergency Status: </span>
+			<span id='status-text'><strong> No Emergency Declared</strong></span><!-- hook into minneapolis snow emergency API/SMS system -->
 		</div>
-		<!-- <hr class='bold-hr'> -->
 	</div>
 	<div id='map'></div>
-	<div class='info-area' id='info-area'>
-		<div id='day-selector-area'> <!-- I think you Will need JQuery to auto-select the correct button based on emergency status-->
+	<div id='selector-info-area'>
+		<div id='day-selector-container'>
+			<button class='day-selector' id='day1-selector' value=1>
+				<i class='fa fa-caret-down'></i>
+			</button>
+			<button class='day-selector' id='day2-selector' value=2>
+				<i class='fa fa-caret-down'></i>
+			</button>
+			<button class='day-selector' id='day3-selector' value=3>
+				<i class='fa fa-caret-down'></i>
+			</button>
+		</div>
+		<div id='info-area'>
 			<!-- Day 1 Container -->
-			<div class='day' id='day1'>
-				<button class='day-selector' id='day1-selector' value=1>
-				</button>
-				<div class='dropdown-container' id='dropdown-container1'>
-					<div class='do'>
-						<span>Park in any valid parking spot on non-Snow Emergency Routes.</span>
-					</div>
-					<div class='dont'>
-						<span>Do NOT park on either side of a Snow Emergency Route.</span>
-					</div>
-					<div class='parking-time'>
-						<span class='day1-time'>Day 1 Rules start at 9 PM and end at 8 AM the following morning.</span>
-					</div>
+			<div class='toggle-container' id='day1'>
+				<div class='do'>
+					<span>Park in any valid parking spot on non-Snow Emergency Routes.</span>
 				</div>
-				<hr class='faint-hr'>
+				<div class='dont'>
+					<span>Do NOT park on either side of a Snow Emergency Route.</span>
+				</div>
+				<div class='parking-time'>
+					<span class='day1-time'>Day 1 Rules start at 9 PM and end at 8 AM the next morning.</span>
+				</div>
 			</div>
+			<hr class='faint-hr'>
 
 			<!-- Day 2 Container> -->
-			<div class='day' id='day2'>
-				<button class='day-selector' id='day2-selector' value=2>
-					<i class='fa fa-caret-down'></i>
-				</button>
-				<div class='dropdown-container' id='dropdown-container2'>
-					<div class='do'>
-						<span>Park on either side of Snow Emergency Routes or the ODD side of non-Snow Emergency Routes.</span>
-					</div>
-					<div class='dont'>
-						<span>Do NOT park on the EVEN side of non-Snow Emergency Routes.</span>
-					</div>
-					<div class='parking-time'>
-						<span>Rules are in effect from:</span>
-						<strong><span class='day2-3-time'>8 AM - 8 PM</span></strong>
-					</div>
+			<div class='toggle-container' id='day2'>
+				<div class='do'>
+					<span>Park on either side of Snow Emergency Routes or the ODD side of non-Snow Emergency Routes.</span>
 				</div>
-				<hr class='faint-hr'>
+				<div class='dont'>
+					<span>Do NOT park on the EVEN side of non-Snow Emergency Routes.</span>
+				</div>
+				<div class='parking-time'>
+					<span>Rules are in effect from:</span>
+					<strong><span class='day2-3-time'>8 AM - 8 PM</span></strong>
+				</div>
 			</div>
+			<hr class='faint-hr'>
 
 			<!-- Day 3 Container -->
-			<div class='day' id='day3'>
-				<button class='day-selector' id='day3-selector' value=3>
-					<i class='fa fa-caret-down'></i>
-				</button>
-				<div class='dropdown-container' id='dropdown-container3'>
-					<div class='do'>
-						<span>Park on either side of Snow Emergency Routes or the EVEN side of non-Snow Emergency Routes</span>
-					</div>
-					<div class='dont'>
-						<span>Do NOT park on the ODD side of non-Snow Emergency Routes.</span>
-					</div>
-					<div class='parking-time'>
-						<span>Rules are in effect from:</span>
-						<strong><span class='day2-3-time'>8 AM - 8 PM</span></strong>
-					</div>
+			<div class='toggle-container' id='day3'>
+				<div class='do'>
+					<span>Park on either side of Snow Emergency Routes or the EVEN side of non-Snow Emergency Routes</span>
 				</div>
-				<hr class='faint-hr'>
+				<div class='dont'>
+					<span>Do NOT park on the ODD side of non-Snow Emergency Routes.</span>
+				</div>
+				<div class='parking-time'>
+					<span>Rules are in effect from:</span>
+					<strong><span class='day2-3-time'>8 AM - 8 PM</span></strong>
+				</div>
 			</div>
+			<hr class='faint-hr'>
 		</div>
+	</div>
 		<!-- Official Link ~~~~ move to menu/settings/more
 		<div id='official-link'>
 			<hr class='faint-hr'>
 			<a href='http://www.ci.minneapolis.mn.us/snow/snow_parking-info' target='blank'>Official Minneapolis Snow Emergency Rules 🔗</a>
 		</div>
 		-->
-	</div>
 </div>
 <script src='map.js'></script>
 <script src='day-info.js'></script>

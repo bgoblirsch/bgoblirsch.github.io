@@ -1,62 +1,58 @@
 /*
 * === BODY & MAP ===
 */
+
+.wrapper {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+
 body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #262626}
 #map {
-  position: absolute;
-  transition: .5s;
-  bottom: 25%;
-  top: 85.5px;
-  width: 100%;
-  height: auto;
+  height: 65vh;
+  flex-grow: 2; /* can try flex-grow here, but you probably need to search online*/
  }
 
  /*
 * === GEOCODER & STATUS AREA ===
 */
- #geo-status-fixed {
-   position: relative;
-   width: auto;
-   top: 0px;
-   z-index: 1;
+ #geo-status-area {
+   display: flex;
+   flex-direction: column;
    background-color: #111;
-   transition: .5s ease-out;
    font-family: 'Montserrat', sans-serif;
    border-bottom: solid 2px white;
  }
 #geocoder {
-  position: relative;
-  width: auto;
-  padding: 5px;
+  margin: 1vh;
 }
 .mapboxgl-ctrl-geocoder {
   min-width: 100%;
 }
-#snow-emergency-status {
-  position: relative;
-  text-align: center;
+#status-area {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
   background-color: #111;
-  margin-bottom: 5px;
+  margin-bottom: 1vh;
 }
 #status-title {
-  padding: 2px 0px 2px 2px;
-  font-size: 100%;
+  flex-wrap: nowrap;
+  font-size: 95%;
   color: white;
-  margin: 0px;
   display: inline;
-  width: 50%;
+  margin-right: 2px;
 }
 #status-text {
+  flex-wrap: nowrap;
   color: green;
-  margin: 0px;
-  padding: 2px 4px;
-  font-size: 90%;
-  width: 50%;
+  font-size: 95%;
   display: inline;
-}
-.bold-hr {
-  margin: 5px 0px 0px 0px;
-  bottom: 0px;
+  white-space: nowrap;
+  margin-left: 2px;
 }
 
 /*
@@ -65,56 +61,51 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
 .faint-hr {
   display: none;
 }
-.info-area {
-  width: 100%;
-  height: 25%;
-  position: absolute;
-  bottom: 0px;
+#selector-info-area {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  margin-top: auto;
+}
+#info-area {
+  display: flex;
+  flex-grow: 2;
+  flex-direction: column;
   overflow-x: hidden;
-  border-top: solid white 2px;
   font-family: 'Roboto', sans-serif;
 }
-.info-area p {
+#info-area p {
   padding: 3px 4px 3px 8px;
   text-decoration: none;
-  font-size: 15px;
   color: #818181;
   display: block;
 }
-.info-area a {
+#info-area a {
   color: white;
   padding: 4px;
-  font-size: 17px;
   display: block;
   text-align: center;
 }
 /*
 * — Day Selector Buttons & Info —
 */
-#day-selector-area {
-  position: absolute;
-  bottom: 0px;
-  width: 100%;
-  height: 100%;
+#day-selector-container {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row;
   overflow-x: auto;
+  margin-top: auto;
 }
 .day {
   display: inline-block;
-  bottom: 0px;
 }
 .day-selector {
-  position: absolute;
-  bottom: 0px;
-  width: 33.4%;
-  height: 30%;
   text-decoration: none;
   padding: 10px 0px;
-  font-size: 20px;
   color: #818181;
   border-color: white;
   border-width: 2px;
   border-style: solid;
-  display: inline-block;
   background: none;
   text-align: center;
   cursor: pointer;
@@ -122,16 +113,13 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
   font-family: 'Montserrat', sans-serif;
 }
 #day1-selector {
-  left: 0px;
-  position: absolute;
+  flex-grow: 1;
 }
 #day2-selector {
-  left: 33.3%;
-  position: absolute;
+  flex-grow: 1;
 }
 #day3-selector {
-  right: 0px;
-  position: absolute;
+  flex-grow: 1;
 }
 /* On mouse-over */
 .day-selector:hover {
@@ -142,88 +130,57 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
   background-color: #8a8a8a;
   color: black;
 }
-/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
-.dropdown-container {
+/* Toggle-container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+.toggle-container {
   display: none;
-  position: absolute;
-  background-color: #262626;
-  color: white;
+  flex-direction: column;
   text-align: center;
-  transition: height 1.0s ease-out;
-  bottom: 30%;
-  top: 0px;
-  width: 100%;
-  left: 0px;
-}
-.dropdown-container span {
   color: white;
-  padding: 2px;
-  margin: 2px;
 }
-/* Optional: Style the caret down icon */
-.fa-caret-down {
-  float: right;
-  padding-right: 8px;
-}
-.rotate {
-  transform: rotate(90deg);
-  transition: 0.5s;
+#day1 {
+  display: flex;
+  flex-grow: 2;
 }
 /* Style the "Do" section */
 .do {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  height: 67%;
-  width: calc(50% - 10px);
-  background-color: #111;
-  border-color: green;
-  border-width: 5px;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: #133318;
+  border-color: #5abf70;
+  border-width: 3.5px;
   border-style: solid;
 }
 .do span {
-  position: absolute;
-  top: 50%;
-  left: 0px;
-  margin: 3px;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
   font-size: 90%;
 }
 /* Style the "Don't" section */
 .dont {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  height: 67%;
-  width: calc(50% - 10px);
-  background-color: #111;
-  border-color: red;
-  border-width: 5px;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: #801f1f;
+  border-color: #e35d71;
+  border-width: 3.5px;
   border-style: solid;
 }
 .dont span {
-  right: 0px;
-  top: 50%;
-  position: absolute;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
   font-size: 90%;
 }
 .parking-time {
-  position: absolute;
-  width: 100%;
-  height: 28%;
-  padding: 2px;
-  bottom: 0px;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 .parking-time span {
-  top: 50%;
   display: inline-block;
-  position: relative;
   margin: 2px 0px;
   padding: 2px 0px;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-  font-size: 2.8vw;
+  font-size: 85%;
 }

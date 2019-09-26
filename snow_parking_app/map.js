@@ -19,13 +19,6 @@ var head = document.getElementsByTagName('HEAD')[0];
 // ############ //
 // ############ //
 
-// Set the width of the side navigation to 0 and the left margin of the page content to 0
-// THIS IS CURRENTLY NOT USED
-function closeNav() {
-  document.getElementById('info-area').style.width = '0';
-  document.getElementById('map').style.marginLeft = '0';
-}
-
 // Sleep functionality
 const sleep = (milliseconds) => {
   return new Promise(resolve => setTimeout(resolve, milliseconds))
@@ -103,40 +96,14 @@ var geocoder = new MapboxGeocoder({
 var geocoderHTML = document.getElementById('geocoder');
 geocoderHTML.appendChild(geocoder.onAdd(map));
 
-/*
-// Listeners for search bar
-var searchBar = document.getElementsByClassName('mapboxgl-ctrl-geocoder--input')[0];
-searchBar.onfocus = function() {
-  if ( isPortrait() ) {
-    // Load portrait css sheet
-    var link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.type = 'text/css';
-    link.href = 'css/portrait-styles.css';
-    head.appendChild(link);
-    // Hide map and info area
-    document.getElementById('map').style.display = 'none';
-    document.getElementById('info-area').style.display = 'none';
-
-  }
-};
-searchBar.onblur = function() {conso
-  document.getElementById('map').style.display = 'block';
-  document.getElementById('info-area').style.display = 'block';
-};
-*/
-
-var geoStatusHeight = document.getElementById('geo-status-fixed').offsetHeight;
-
 // var displayZoom determines whether or not to include zoom controls on map
 if (isPortrait()) {
   var displayZoom = false;
 }
 else {
   var displayZoom = true;
-  document.getElementById('info-area').style.top = geoStatusHeight;
-  document.getElementById('map').style.top = 0;
 };
+
 // Add compass to map (& zoom if landscape)
 var nav = new mapboxgl.NavigationControl({showZoom: displayZoom});
 map.addControl(nav, 'bottom-right');
@@ -149,22 +116,8 @@ window.addEventListener("orientationchange", function() {
   nav = new mapboxgl.NavigationControl({showZoom: displayZoom});
   map.addControl(nav, 'bottom-right');
   changeDayButtonContent();
-  if ( !isPortrait() ) {
-    document.getElementById('info-area').style.height = "";
-    document.getElementById('map').style.top = 0;
-    sleep(100).then(() => {
-      geoStatusHeight = document.getElementById('geo-status-fixed').offsetHeight;
-      document.getElementById('info-area').style.top = geoStatusHeight;
-    });
-  } else {
-    document.getElementById('info-area').style.top = "";
-    sleep(100).then(() => {
-      geoStatusHeight = document.getElementById('geo-status-fixed').offsetHeight;
-      document.getElementById('map').style.top = geoStatusHeight;
-
-    })
   }
-});
+);
 
 // Disable Map Rotation. Touch Rotation is still enabled, this is just to dissuade tilting.
 map.dragRotate.disable();
@@ -222,43 +175,23 @@ map.on('load', function () {
 
 //* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content
 // This allows the user to have multiple dropdowns without any conflict */
-var dropdown = document.getElementsByClassName('day-selector');
+var infoContainer = document.getElementsByClassName('day-selector');
 var officialLink = document.getElementById('official-link');
 var i;
 
 // Add click event listener on the three dropdown buttons
-for (i = 0; i < dropdown.length; i++) {
+for (i = 0; i < infoContainer.length; i++) {
   dropdown[i].addEventListener('click', function() {
-    var dropdownContent = this.nextElementSibling;
     // Check to see if the clicked button is active
     if (this.classList.value.includes('active')) {
       // if so, deactivate and hide content
       this.classList.toggle('active');
-      dropdownContent.style.display = 'none';
       map.setLayoutProperty('test-data', 'visibility', 'none');
-      // if portrait, shrink info-area, resize buttons, and resize map
-      if ( isPortrait() ) {
-        document.getElementById('map').style.bottom = '7.5%';
-        document.getElementById('info-area').style.height = '7.5%';
-        for (i = 0; i < dropdown.length; i++) {
-          dropdown[i].style.height = '100%';
-        }
-
-        sleep(400).then(() => {
-          map.resize();
-        })
-      }
     }
     else {
-      if ( isPortrait() ) {
-        document.getElementById('map').style.bottom = '25%';
-        document.getElementById('info-area').style.height = '25%';
-      }
       // else loop through all buttons, deactive them, and hide content accordingly
+
       for (j = 0; j < dropdown.length; j++) {
-        if ( isPortrait() ) {
-          dropdown[j].style.height = '30%';
-        }
         if (dropdown[j].classList.value.includes('active')) {
           // if portrait, uncompress buttons/info-area and resize map
           dropdown[j].classList.toggle('active');
@@ -267,10 +200,10 @@ for (i = 0; i < dropdown.length; i++) {
           console.log('closeMapLayers();');
         }
       }
+
       // Now "turn on" the clicked button and activate its map layer
       // also rotate the arrow
       this.classList.toggle('active');
-      dropdownContent.style.display = 'block';
       if (!isPortrait()) {
         this.parentElement.scrollIntoView();
       }
@@ -295,27 +228,17 @@ for (i = 0; i < dropdown.length; i++) {
   });
 }
 
-/*
-// Add a listener for geocoder focus
-geocoderHTML.addEventListener('focus', function() {
-  if (isPortrait) {
-    console.log('aye lmao');
-
-    // Create new link Element
-    var link = document.createElement('link');
-
-    // set the attributes for link element
-    link.rel = 'stylesheet';
-    link.type = 'text/css';
-    link.href = 'css/portrait-styles.css';
-
-    // Append link element to HTML head
-    head.appendChild(link);
-    // prevent screen rotation
+// jquery Code to auto-resize text based on div width
+// Found here: https://coderwall.com/p/_8jxgw/autoresize-text-to-fit-into-a-div-width-height
+(function() {
+  var elements = $('.resize');
+  if(elements.length < 0) {
+    return;
   }
-  else {
-        console.log('aye lmmmmmaaaaaaoooooo');
-    // expand sidebar to ~40% screen width or do nothing???
-  }
-})
-*/
+  elements.each(function(i, element) {
+    while(element.scrollWidth > element.offsetWidth || element.scrollHeight > element.offsetHeight) {
+      var newFontSize = (parseFloat($(element).css('font-size').slice(0, -2)) * 0.95) + 'px';
+      $(element).css('font-size', newFontSize);
+    }
+  });
+})();
