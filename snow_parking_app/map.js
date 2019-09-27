@@ -12,6 +12,7 @@
 
 // Get HTML head element to use for loading css files
 var head = document.getElementsByTagName('HEAD')[0];
+var mapTop;
 
 // ############ //
 // ############ //
@@ -23,6 +24,11 @@ var head = document.getElementsByTagName('HEAD')[0];
 const sleep = (milliseconds) => {
   return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
+
+sleep(200).then(() => {
+  mapTop = document.getElementById('geo-status-area').offsetHeight;
+  document.getElementById('day-selector-container').style.top = mapTop;
+});
 
 // if (landscape) { "Day 1 Info v"} else {"Day 1"}
 function changeDayButtonContent() {
@@ -48,15 +54,6 @@ function isPortrait() {
   else { return false; }
 }
 
-// Should make this a function for better reuseability and readability
-// extract form orientationchange listener
-function changeOrientation() {
-  var isPortrait = isPortrait();
-  if (isPortrait) {
-    //
-  }
-}
-
 // ############# //
 // ############# //
 // Map Functions //
@@ -70,6 +67,8 @@ function changeOrientation() {
 //   Map Code    //
 // ############# //
 // ############# //
+
+
 
 // Mapbox Token:
 mapboxgl.accessToken = 'pk.eyJ1IjoiYmdvYmxpcnNjaCIsImEiOiJjanpybWFsNWcxY3dnM21vNXZmN21lcXNrIn0.MwA-tEeJpUwITy7wkPwYJA';
@@ -110,6 +109,7 @@ map.addControl(nav, 'bottom-right');
 
 // Add/remove zoom on orientation change
 // Also resize the map
+/*
 window.addEventListener("orientationchange", function() {
   map.removeControl(nav);
   displayZoom = !displayZoom;
@@ -118,6 +118,17 @@ window.addEventListener("orientationchange", function() {
   changeDayButtonContent();
   }
 );
+*/
+
+
+window.onresize = function() {
+  map.resize();
+  sleep(200).then(() => {
+    mapTop = document.getElementById('geo-status-area').offsetHeight;
+    document.getElementById('day-selector-container').style.top = mapTop;
+  });
+}
+
 
 // Disable Map Rotation. Touch Rotation is still enabled, this is just to dissuade tilting.
 map.dragRotate.disable();
@@ -151,13 +162,15 @@ var testData = {
   }
 };
 
-changeDayButtonContent();
+/*
 if ( !isPortrait() ) {
   sleep(100).then(() => {
     geoStatusHeight = document.getElementById('geo-status-fixed').offsetHeight;
     document.getElementById('info-area').style.top = geoStatusHeight;
   });
 }
+*/
+
 map.on('load', function () {
   // Add road data
   // map.addSource(snow_route_data);
@@ -175,31 +188,40 @@ map.on('load', function () {
 
 //* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content
 // This allows the user to have multiple dropdowns without any conflict */
-var infoContainer = document.getElementsByClassName('day-selector');
-var officialLink = document.getElementById('official-link');
-var i;
+var dayButtons = document.getElementsByClassName('day-selector');
+var infoArea = document.getElementById('info-area');
 
-// Add click event listener on the three dropdown buttons
-for (i = 0; i < infoContainer.length; i++) {
-  dropdown[i].addEventListener('click', function() {
+// Add click event listener on the three dropdown button
+for (var i = 0; i < dayButtons.length; i++) {
+  dayButtons[i].addEventListener('click', function() {
+    // Grabs the value of the clicked button and appends it to 'day'
+    var day = 'day' + this.value;
     // Check to see if the clicked button is active
     if (this.classList.value.includes('active')) {
       // if so, deactivate and hide content
       this.classList.toggle('active');
       map.setLayoutProperty('test-data', 'visibility', 'none');
+      infoArea.style.display = 'none';
+      document.getElementById(day).style.display = 'none';
+      map.resize();
     }
     else {
       // else loop through all buttons, deactive them, and hide content accordingly
-
-      for (j = 0; j < dropdown.length; j++) {
-        if (dropdown[j].classList.value.includes('active')) {
+      for (j = 0; j < dayButtons.length; j++) {
+        if (dayButtons[j].classList.value.includes('active')) {
           // if portrait, uncompress buttons/info-area and resize map
-          dropdown[j].classList.toggle('active');
-          var iterDropdownContent = dropdown[j].nextElementSibling;
-          iterDropdownContent.style.display = 'none';
+          dayButtons[j].classList.toggle('active');
+          var buttonDay = 'day' + dayButtons[j].value;
+          document.getElementById(buttonDay).style.display = 'none';
           console.log('closeMapLayers();');
         }
       }
+
+      // Turn on the correct info area div
+      var day = 'day' + this.value;
+      document.getElementById(day).style.display = 'flex';
+      infoArea.style.display = 'flex';
+      map.resize();
 
       // Now "turn on" the clicked button and activate its map layer
       // also rotate the arrow
@@ -227,18 +249,3 @@ for (i = 0; i < infoContainer.length; i++) {
     }
   });
 }
-
-// jquery Code to auto-resize text based on div width
-// Found here: https://coderwall.com/p/_8jxgw/autoresize-text-to-fit-into-a-div-width-height
-(function() {
-  var elements = $('.resize');
-  if(elements.length < 0) {
-    return;
-  }
-  elements.each(function(i, element) {
-    while(element.scrollWidth > element.offsetWidth || element.scrollHeight > element.offsetHeight) {
-      var newFontSize = (parseFloat($(element).css('font-size').slice(0, -2)) * 0.95) + 'px';
-      $(element).css('font-size', newFontSize);
-    }
-  });
-})();

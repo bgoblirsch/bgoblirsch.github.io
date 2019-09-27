@@ -23,75 +23,70 @@
 <body>
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.min.js'></script>
 
-
+<div id='day-selector-container'>
+	<button class='day-selector' id='day1-selector' value=1>
+		Day 1 Info
+	</button>
+	<button class='day-selector' id='day2-selector' value=2>
+		Day 2 Info
+	</button>
+	<button class='day-selector' id='day3-selector' value=3>
+		Day 3 Info
+	</button>
+</div>
 <div class='wrapper'>
 	<div id='geo-status-area'>
 		<div id='geocoder'></div>
 		<div id='status-area'> <!-- auto resize text in this div to fit on one line in parent div -->
 			<!-- info button here saying, "A snow emergency will never be declared after X:00 PM"-->
 			<!-- i think these two p elements should be wrapped in divs, width = 50%, and font-auto scale in size to fit -->
-			<span class='resize' id='status-title'>Snow Emergency Status: </span>
-			<span id='status-text'><strong> No Emergency Declared</strong></span><!-- hook into minneapolis snow emergency API/SMS system -->
+			<span id='status-title'>Snow Emergency Status: </span>
+			<span id='status-text'>No Emergency Declared</span><!-- hook into minneapolis snow emergency API/SMS system -->
 		</div>
 	</div>
 	<div id='map'></div>
-	<div id='selector-info-area'>
-		<div id='day-selector-container'>
-			<button class='day-selector' id='day1-selector' value=1>
-				<i class='fa fa-caret-down'></i>
-			</button>
-			<button class='day-selector' id='day2-selector' value=2>
-				<i class='fa fa-caret-down'></i>
-			</button>
-			<button class='day-selector' id='day3-selector' value=3>
-				<i class='fa fa-caret-down'></i>
-			</button>
+	<div id='info-area'>
+		<!-- Day 1 Container -->
+		<div class='toggle-container' id='day1'>
+			<div class='do'>
+				<span>Park in any valid parking spot on non-Snow Emergency Routes.</span>
+			</div>
+			<div class='dont'>
+				<span>Do NOT park on either side of a Snow Emergency Route.</span>
+			</div>
+			<div class='parking-time'>
+				Day 1 Rules start at 9 PM and end at 8 AM the next morning.
+			</div>
 		</div>
-		<div id='info-area'>
-			<!-- Day 1 Container -->
-			<div class='toggle-container' id='day1'>
-				<div class='do'>
-					<span>Park in any valid parking spot on non-Snow Emergency Routes.</span>
-				</div>
-				<div class='dont'>
-					<span>Do NOT park on either side of a Snow Emergency Route.</span>
-				</div>
-				<div class='parking-time'>
-					<span class='day1-time'>Day 1 Rules start at 9 PM and end at 8 AM the next morning.</span>
-				</div>
-			</div>
-			<hr class='faint-hr'>
+		<hr class='faint-hr'>
 
-			<!-- Day 2 Container> -->
-			<div class='toggle-container' id='day2'>
-				<div class='do'>
-					<span>Park on either side of Snow Emergency Routes or the ODD side of non-Snow Emergency Routes.</span>
-				</div>
-				<div class='dont'>
-					<span>Do NOT park on the EVEN side of non-Snow Emergency Routes.</span>
-				</div>
-				<div class='parking-time'>
-					<span>Rules are in effect from:</span>
-					<strong><span class='day2-3-time'>8 AM - 8 PM</span></strong>
-				</div>
+		<!-- Day 2 Container> -->
+		<div class='toggle-container' id='day2'>
+			<div class='do'>
+				<span>Park on either side of Snow Emergency Routes or the ODD side of non-Snow Emergency Routes.</span>
 			</div>
-			<hr class='faint-hr'>
-
-			<!-- Day 3 Container -->
-			<div class='toggle-container' id='day3'>
-				<div class='do'>
-					<span>Park on either side of Snow Emergency Routes or the EVEN side of non-Snow Emergency Routes</span>
-				</div>
-				<div class='dont'>
-					<span>Do NOT park on the ODD side of non-Snow Emergency Routes.</span>
-				</div>
-				<div class='parking-time'>
-					<span>Rules are in effect from:</span>
-					<strong><span class='day2-3-time'>8 AM - 8 PM</span></strong>
-				</div>
+			<div class='dont'>
+				<span>Do NOT park on the EVEN side of non-Snow Emergency Routes.</span>
 			</div>
-			<hr class='faint-hr'>
+			<div class='parking-time'>
+				<span>Rules are in effect from: <strong>8 AM - 8 PM</strong></span>
+			</div>
 		</div>
+		<hr class='faint-hr'>
+
+		<!-- Day 3 Container -->
+		<div class='toggle-container' id='day3'>
+			<div class='do'>
+				<span>Park on either side of Snow Emergency Routes or the EVEN side of non-Snow Emergency Routes</span>
+			</div>
+			<div class='dont'>
+				<span>Do NOT park on the ODD side of non-Snow Emergency Routes.</span>
+			</div>
+			<div class='parking-time'>
+				<span>Rules are in effect from: <strong>8 AM - 8 PM</strong></span>
+			</div>
+		</div>
+		<hr class='faint-hr'>
 	</div>
 		<!-- Official Link ~~~~ move to menu/settings/more
 		<div id='official-link'>
