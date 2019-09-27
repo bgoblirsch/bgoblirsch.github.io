@@ -12,6 +12,7 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
 #map {
   height: 65vh;
   flex-grow: 2; /* can try flex-grow here, but you probably need to search online*/
+  transition: all 0.4s;
  }
 
  /*
@@ -23,6 +24,7 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
    background-color: #111;
    font-family: 'Montserrat', sans-serif;
    border-bottom: solid 2px white;
+   z-index: 10;
  }
 #geocoder {
   margin: 1vh;
@@ -48,11 +50,12 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
 }
 #status-text {
   flex-wrap: nowrap;
-  color: green;
+  color: #00ff99;
   font-size: 95%;
   display: inline;
   white-space: nowrap;
   margin-left: 2px;
+  font-weight: 900;
 }
 
 /*
@@ -61,15 +64,9 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
 .faint-hr {
   display: none;
 }
-#selector-info-area {
-  display: flex;
-  flex-grow: 1;
-  flex-direction: column;
-  margin-top: auto;
-}
 #info-area {
   display: flex;
-  flex-grow: 2;
+  flex-grow: 1;
   flex-direction: column;
   overflow-x: hidden;
   font-family: 'Roboto', sans-serif;
@@ -91,56 +88,59 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
 */
 #day-selector-container {
   display: flex;
-  flex-grow: 1;
-  flex-direction: row;
+  justify-content: center;
+  position: fixed;
   overflow-x: auto;
-  margin-top: auto;
+  width: 100%;
+  z-index: 5;
+  transition: all 0.4s;
 }
 .day {
   display: inline-block;
 }
 .day-selector {
   text-decoration: none;
-  padding: 10px 0px;
-  color: #818181;
-  border-color: white;
+  color: white;
+  font-weight: bold;
+  border-color: black;
   border-width: 2px;
+  border-radius: 20px;
+  padding: 6px 10px;
+  margin: 6px 10px;
   border-style: solid;
-  background: none;
   text-align: center;
   cursor: pointer;
   outline: none;
   font-family: 'Montserrat', sans-serif;
+  background: rgb(51, 51, 51);
+  background: rgba(51, 51, 51, 0.7);
 }
 #day1-selector {
-  flex-grow: 1;
 }
 #day2-selector {
-  flex-grow: 1;
 }
 #day3-selector {
-  flex-grow: 1;
 }
-/* On mouse-over */
-.day-selector:hover {
-  color: #f1f1f1;
-}
+
 /* Add an active class to the active dropdown button */
 .active {
-  background-color: #8a8a8a;
+  background: rgba(247, 247, 247);
+  background: rgba(247, 247, 247, 0.99);
   color: black;
+  font-weight: bold;
 }
 /* Toggle-container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
 .toggle-container {
   display: none;
-  flex-direction: column;
+  flex-grow: 1;
+  flex-wrap: wrap;
+  flex-direction: row;
   text-align: center;
   color: white;
+  transition: all 0.4s;
 }
-#day1 {
-  display: flex;
-  flex-grow: 2;
-}
+
+
 /* Style the "Do" section */
 .do {
   display: flex;
@@ -149,12 +149,13 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
   align-items: center;
   justify-content: center;
   background-color: #133318;
-  border-color: #5abf70;
+  border-color: #00ff99;
   border-width: 3.5px;
   border-style: solid;
+  padding: 4px 4px;
 }
 .do span {
-  font-size: 90%;
+  font-size: 3.3vw;
 }
 /* Style the "Don't" section */
 .dont {
@@ -164,23 +165,24 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
   align-items: center;
   justify-content: center;
   background-color: #801f1f;
-  border-color: #e35d71;
+  border-color: #ff0000;
   border-width: 3.5px;
   border-style: solid;
+  padding: 4px 4px;
 }
 .dont span {
-  font-size: 90%;
+  font-size: 3.3vw;
 }
 .parking-time {
   display: flex;
-  flex-grow: 1;
+  flex-basis: 100%;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-}
-.parking-time span {
-  display: inline-block;
-  margin: 2px 0px;
+  margin: 4px 4px;
   padding: 2px 0px;
-  font-size: 85%;
+  font-size: 3.3vw;
+}
+.day2-3-time {
+  margin-left: 2px;
 }
