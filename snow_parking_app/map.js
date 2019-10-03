@@ -83,14 +83,16 @@ function getStatus() {
 }
 
 function setStatus(day) {
-  console.log('setStatus() called');
   var statusText = document.getElementById('status-text');
   var dayText = 'day' + day + '-selector';
   if (day == 0) {
     // set status to 'No Emergency Declared'
     statusText.innerHTML = 'No Emergency Declared';
     statusText.className = 'no-emergency';
-    document.getElementById('day1-selector').click();
+    var dayButton = document.getElementById('day1-selector');
+    if (!dayButton.classList.value.includes('active')) {
+      dayButton.click();
+    }
     /*
     if (!document.getElementById('day1-selector').classList.value.includes('active')) {
       document.getElementById('day1-selector').click();
@@ -100,17 +102,26 @@ function setStatus(day) {
     // set status to 'Emergency Declared - Day 1'
     statusText.innerHTML = 'Emergency Declared - Day 1';
     statusText.className = 'emergency';
-    document.getElementById(dayText).click();
+    var dayButton = document.getElementById(dayText);
+    if (!dayButton.classList.value.includes('active')) {
+      dayButton.click();
+    }
   } else if (day == 2) {
     // set status to 'Day 2 of Snow Emergency'
     statusText.innerHTML = 'Day 2 of Snow Emergency';
     statusText.className = 'emergency';
-    document.getElementById(dayText).click();
+    var dayButton = document.getElementById(dayText);
+    if (!dayButton.classList.value.includes('active')) {
+      dayButton.click();
+    }
   } else if (day == 3) {
     // set status to 'Day 3 of Snow Emergency'
     statusText.innerHTML = 'Day 3 of Snow Emergency';
     statusText.className = 'emergency';
-    document.getElementById(dayText).click();
+    var dayButton = document.getElementById(dayText);
+    if (!dayButton.classList.value.includes('active')) {
+      dayButton.click();
+    }
   } else if (day == -1) {
     statusText.innerHTML = "Couldn't retreive status";
     statusText.style.color = 'yellow';
