@@ -1,17 +1,17 @@
 // This file should be split up into 3 files:
-//  - UI Functions
-//  - map Functions
+//  - UI Functions only
+//  - map Functions only
 //  - main() / code file
 //
 // Should try to pull out some repeated code as functions
 // - for example, would make fixing this like this easier:
 //   + when nothing is selected, then screen is rotated to portrait, map does expand like it should
 
-
 // Init Variables
 
 // Get HTML head element to use for loading css files
 var head = document.getElementsByTagName('HEAD')[0];
+var dayButtons = document.getElementsByClassName('day-selector');
 var mapTop;
 
 // ############ //
@@ -28,6 +28,8 @@ const sleep = (milliseconds) => {
 sleep(200).then(() => {
   mapTop = document.getElementById('geo-status-area').offsetHeight;
   document.getElementById('day-selector-container').style.top = mapTop;
+  // For beta only
+  document.getElementById('emergency-declarer').style.top = mapTop + 60;
 });
 
 // if (landscape) { "Day 1 Info v"} else {"Day 1"}
@@ -54,21 +56,104 @@ function isPortrait() {
   else { return false; }
 }
 
+function deactivate() {
+  var infoArea = document.getElementById('info-area');
+  hideMapLayer();
+  infoArea.style.display = 'none';
+  for (var i = 0; i < dayButtons.length; i++) {
+    dayButtons[i].classList.remove('active');
+  }
+}
+
+function activate(day) {
+  setMapLayer(day);
+  // activate the correct day button (this should be a function)
+  // display the correct info container (so should this)
+}
+
+function getStatus() {
+  // check if an emergency has been Declared
+  // returns:
+  // 0 for no Emergency
+  // 1 for declared - day1
+  // 2 for day 2
+  // 3 for day 3
+  // if it fails, return -1
+  return 0;
+}
+
+function setStatus(day) {
+  console.log('setStatus() called');
+  var statusText = document.getElementById('status-text');
+  var dayText = 'day' + day + '-selector';
+  if (day == 0) {
+    // set status to 'No Emergency Declared'
+    statusText.innerHTML = 'No Emergency Declared';
+    statusText.className = 'no-emergency';
+    document.getElementById('day1-selector').click();
+    /*
+    if (!document.getElementById('day1-selector').classList.value.includes('active')) {
+      document.getElementById('day1-selector').click();
+    }
+    */
+  } else if (day == 1) {
+    // set status to 'Emergency Declared - Day 1'
+    statusText.innerHTML = 'Emergency Declared - Day 1';
+    statusText.className = 'emergency';
+    document.getElementById(dayText).click();
+  } else if (day == 2) {
+    // set status to 'Day 2 of Snow Emergency'
+    statusText.innerHTML = 'Day 2 of Snow Emergency';
+    statusText.className = 'emergency';
+    document.getElementById(dayText).click();
+  } else if (day == 3) {
+    // set status to 'Day 3 of Snow Emergency'
+    statusText.innerHTML = 'Day 3 of Snow Emergency';
+    statusText.className = 'emergency';
+    document.getElementById(dayText).click();
+  } else if (day == -1) {
+    statusText.innerHTML = "Couldn't retreive status";
+    statusText.style.color = 'yellow';
+    console.log('could not retreive status');
+  }
+  else {
+    console.log('uh-oh');
+  }
+}
+
+
 // ############# //
 // ############# //
 // Map Functions //
 // ############# //
 // ############# //
 
-// this is where I'd keep my map functions....if I had any...
+function hideMapLayer() {
+  map.setLayoutProperty('test-data', 'visibility', 'none');
+}
+
+// set map layer style
+function setMapLayer(day) {
+  var lineColor;
+  if (day == 1) {
+    lineColor = 'green';
+  } else if (day == 2) {
+    lineColor = 'red';
+  }
+  else {
+    lineColor = 'yellow';
+  }
+  map.setPaintProperty('test-data', 'line-color', lineColor);
+  if (map.getLayoutProperty('test-data', 'visibility') == 'none') {
+    map.setLayoutProperty('test-data', 'visibility', 'visible');
+  }
+}
 
 // ############# //
 // ############# //
 //   Map Code    //
 // ############# //
 // ############# //
-
-
 
 // Mapbox Token:
 mapboxgl.accessToken = 'pk.eyJ1IjoiYmdvYmxpcnNjaCIsImEiOiJjanpybWFsNWcxY3dnM21vNXZmN21lcXNrIn0.MwA-tEeJpUwITy7wkPwYJA';
@@ -175,7 +260,9 @@ map.on('load', function () {
   // Add road data
   // map.addSource(snow_route_data);
   map.addLayer(testData);
-  document.getElementById('day1-selector').click();
+  var statusResult = getStatus();
+  setStatus(statusResult);
+  //document.getElementById('day1-selector').click();
   geolocate.trigger();
   // if (y > x) {prompt for location} else {point at search}
 });
@@ -188,8 +275,7 @@ map.on('load', function () {
 
 //* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content
 // This allows the user to have multiple dropdowns without any conflict */
-var dayButtons = document.getElementsByClassName('day-selector');
-var infoArea = document.getElementById('info-area');
+
 
 // Add click event listener on the three dropdown button
 for (var i = 0; i < dayButtons.length; i++) {
@@ -200,52 +286,47 @@ for (var i = 0; i < dayButtons.length; i++) {
     if (this.classList.value.includes('active')) {
       // if so, deactivate and hide content
       this.classList.toggle('active');
-      map.setLayoutProperty('test-data', 'visibility', 'none');
-      infoArea.style.display = 'none';
+      hideMapLayer();
+      document.getElementById('info-area').style.display = 'none';
       document.getElementById(day).style.display = 'none';
       map.resize();
     }
     else {
-      // else loop through all buttons, deactive them, and hide content accordingly
+      // deactivate all buttons & hide info container
       for (j = 0; j < dayButtons.length; j++) {
         if (dayButtons[j].classList.value.includes('active')) {
-          // if portrait, uncompress buttons/info-area and resize map
           dayButtons[j].classList.toggle('active');
-          var buttonDay = 'day' + dayButtons[j].value;
-          document.getElementById(buttonDay).style.display = 'none';
-          console.log('closeMapLayers();');
+          var selectedDay = 'day' + dayButtons[j].value;
+          document.getElementById(selectedDay).style.display = 'none';
         }
       }
 
-      // Turn on the correct info area div
+      // set the clicked button to active
+      this.classList.toggle('active');
+
+      // Turn on the info container and the correct day info
       var day = 'day' + this.value;
       document.getElementById(day).style.display = 'flex';
-      infoArea.style.display = 'flex';
+      document.getElementById('info-area').style.display = 'flex';
       map.resize();
 
-      // Now "turn on" the clicked button and activate its map layer
-      // also rotate the arrow
-      this.classList.toggle('active');
-      if (!isPortrait()) {
-        this.parentElement.scrollIntoView();
-      }
-      var lineColor;
-      if (this.value == 1) {
-        lineColor = 'green';
-      } else if (this.value == 2) {
-        lineColor = 'red';
-      }
-      else {
-        lineColor = 'yellow';
-      }
+      // Style the map layer
+      setMapLayer(this.value);
+    }
+  });
+}
 
-      map.setPaintProperty('test-data', 'line-color', lineColor);
-      if (map.getLayoutProperty('test-data', 'visibility') == 'none') {
-        map.setLayoutProperty('test-data', 'visibility', 'visible');
-      }
+// Beta buttons
+var betaButtons = document.getElementsByClassName('emergency-btn');
+var betaArea = document.getElementById('emergency-declarer');
 
-      console.log('pass the following parameter to drawMapLayer():');
-      console.log(this.value);
+for (var i = 0; i < betaButtons.length; i++) {
+  betaButtons[i].addEventListener('click', function() {
+    if (this.value == 'x') {
+      document.getElementById('emergency-declarer').style.display = 'none';
+    }
+    else {
+      setStatus(this.value);
     }
   });
 }

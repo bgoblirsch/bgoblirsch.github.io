@@ -1,13 +1,11 @@
 /*
 * === BODY & MAP ===
 */
-
 .wrapper {
   display: flex;
   height: 100%;
   flex-direction: column;
 }
-
 body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #262626}
 #map {
   height: 65vh;
@@ -43,19 +41,25 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
 }
 #status-title {
   flex-wrap: nowrap;
-  font-size: 95%;
+  font-size: 3.5vw;
   color: white;
   display: inline;
   margin-right: 2px;
 }
 #status-text {
   flex-wrap: nowrap;
-  color: #00ff99;
-  font-size: 95%;
+  font-size: 3.5vw;
   display: inline;
   white-space: nowrap;
   margin-left: 2px;
   font-weight: 900;
+}
+.no-emergency {
+  color: #00ff99;
+}
+
+.emergency {
+  color: red;
 }
 
 /*
@@ -139,7 +143,9 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
   color: white;
   transition: all 0.4s;
 }
-
+#day1 {
+  display: flex;
+}
 
 /* Style the "Do" section */
 .do {
@@ -156,6 +162,7 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
 }
 .do span {
   font-size: 3.3vw;
+
 }
 /* Style the "Don't" section */
 .dont {
@@ -185,4 +192,16 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
 }
 .day2-3-time {
   margin-left: 2px;
+}
+
+/* For Beta only - emergency declarer */
+#emergency-declarer {
+  display: flex;
+  top: 300px;
+  position: fixed;
+  z-index: 5;
+  left: 0;
+}
+.emergency-btn {
+  margin: 5px;
 }
