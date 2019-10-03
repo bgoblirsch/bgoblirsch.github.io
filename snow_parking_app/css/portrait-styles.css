@@ -197,6 +197,8 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
 /* For Beta only - emergency declarer */
 #emergency-declarer {
   display: flex;
+  width: 100%;
+  justify-content: center;
   top: 300px;
   position: fixed;
   z-index: 5;
