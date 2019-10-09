@@ -268,9 +268,19 @@ if ( !isPortrait() ) {
 */
 
 map.on('load', function () {
+  var layers = map.getStyle().layers;
+  // Find the index of the first symbol layer in the map style
+  var mapLabels;
+  for (var i = 0; i < layers.length; i++) {
+    if (layers[i].type === 'symbol') {
+      mapLabels = layers[i].id;
+      break;
+    }
+  }
+
   // Add road data
   // map.addSource(snow_route_data);
-  map.addLayer(testData);
+  map.addLayer(testData, mapLabels);
   var statusResult = getStatus();
   setStatus(statusResult);
   //document.getElementById('day1-selector').click();

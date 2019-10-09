@@ -19,13 +19,17 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
  #geo-status-area {
    display: flex;
    flex-direction: column;
+   align-items: center;
    background-color: #111;
    font-family: 'Montserrat', sans-serif;
    border-bottom: solid 2px white;
    z-index: 10;
  }
 #geocoder {
+  display: flex;
   margin: 1vh;
+  width: 100%;
+  max-width: 800px;
 }
 .mapboxgl-ctrl-geocoder {
   min-width: 100%;
@@ -44,14 +48,14 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
   font-size: 3.5vw;
   color: white;
   display: inline;
-  margin-right: 2px;
+  margin-right: 0.5vw;
 }
 #status-text {
   flex-wrap: nowrap;
   font-size: 3.5vw;
   display: inline;
   white-space: nowrap;
-  margin-left: 2px;
+  margin-left: 0.5vw;
   font-weight: 900;
 }
 .no-emergency {
@@ -143,6 +147,7 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
   color: white;
   transition: all 0.4s;
 }
+
 #day1 {
   display: flex;
 }
@@ -162,7 +167,11 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
 }
 .do span {
   font-size: 3.3vw;
-
+}
+@media screen and (min-width: 1200px) {
+  .do span {
+     font-size: 18px;
+  }
 }
 /* Style the "Don't" section */
 .dont {
@@ -180,6 +189,11 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
 .dont span {
   font-size: 3.3vw;
 }
+@media screen and (min-width: 1200px) {
+  .dont span {
+     font-size: 18px;
+  }
+}
 .parking-time {
   display: flex;
   flex-basis: 100%;
@@ -189,6 +203,11 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
   margin: 4px 4px;
   padding: 2px 0px;
   font-size: 3.3vw;
+}
+@media screen and (min-width: 1200px) {
+  .parking-time {
+     font-size: 18px;
+  }
 }
 .day2-3-time {
   margin-left: 2px;
