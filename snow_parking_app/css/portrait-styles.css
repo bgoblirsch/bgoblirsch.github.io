@@ -24,12 +24,19 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
    font-family: 'Montserrat', sans-serif;
    border-bottom: solid 2px white;
    z-index: 10;
- }
+   padding-left: 1vh;
+   padding-right: 1vh;
+}
+@media screen and (min-width: 700px) {
+  #geocoder {
+     max-width: 300px;
+  }
+}
 #geocoder {
   display: flex;
+  justify-content: center;
   margin: 1vh;
   width: 100%;
-  max-width: 800px;
 }
 .mapboxgl-ctrl-geocoder {
   min-width: 100%;
@@ -168,7 +175,7 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
 .do span {
   font-size: 3.3vw;
 }
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1000px) {
   .do span {
      font-size: 18px;
   }
@@ -189,7 +196,7 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
 .dont span {
   font-size: 3.3vw;
 }
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1000px) {
   .dont span {
      font-size: 18px;
   }
@@ -204,7 +211,7 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
   padding: 2px 0px;
   font-size: 3.3vw;
 }
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1000px) {
   .parking-time {
      font-size: 18px;
   }
