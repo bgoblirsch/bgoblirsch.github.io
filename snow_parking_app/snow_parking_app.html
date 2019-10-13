@@ -12,6 +12,7 @@
 
 	<!-- <link href="css/landscape-styles.css" rel="stylesheet" media="all and (orientation: landscape)" type='text/css'> -->
 	<link href="css/portrait-styles.css" rel="stylesheet" type='text/css'>
+	<link href="css/loading.css" rel="stylesheet" type='text/css'>
 	<!--
 	<link href="css/landscape-styles.css" rel="stylesheet" media="all and (min-aspect-ratio: 13/9)" type='text/css'>
 	<link href="css/portrait-styles.css" rel="stylesheet" media="all and (max-aspect-ratio: 13/9)" type='text/css'>
@@ -59,10 +60,12 @@
 			<!-- info button here saying, "A snow emergency will never be declared after X:00 PM"-->
 			<!-- i think these two p elements should be wrapped in divs, width = 50%, and font-auto scale in size to fit -->
 			<span id='status-title'>Snow Emergency Status: </span>
-			<span id='status-text'>No Emergency Declared</span><!-- hook into minneapolis snow emergency API/SMS system -->
+			<span id='status-text'>Loading . . .</span><!-- hook into minneapolis snow emergency API/SMS system -->
 		</div>
 	</div>
-	<div id='map'></div>
+	<div id='map'>
+		<div id='loading-map' class="lds-ring"><div></div><div></div><div></div><div></div></div>
+	</div>
 	<div id='info-area'>
 		<!-- Day 1 Container -->
 		<div class='toggle-container' id='day1'>
