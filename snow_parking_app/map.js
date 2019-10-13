@@ -268,6 +268,8 @@ if ( !isPortrait() ) {
 */
 
 map.on('load', function () {
+  document.getElementById('loading-map').style.display = 'none';
+  //document.getElementById('loading-text').style.display = 'none';
   var layers = map.getStyle().layers;
   // Find the index of the first symbol layer in the map style
   var mapLabels;
@@ -281,9 +283,12 @@ map.on('load', function () {
   // Add road data
   // map.addSource(snow_route_data);
   map.addLayer(testData, mapLabels);
+
+  // Get snow emergency status and set UI accordingly
   var statusResult = getStatus();
   setStatus(statusResult);
-  //document.getElementById('day1-selector').click();
+
+  // Prompt user for geoloacation
   geolocate.trigger();
   // if (y > x) {prompt for location} else {point at search}
 });
