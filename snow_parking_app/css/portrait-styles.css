@@ -29,11 +29,6 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
    padding-left: 1vh;
    padding-right: 1vh;
 }
-@media screen and (min-width: 700px) {
-  #geocoder {
-     max-width: 300px;
-  }
-}
 #geocoder {
   display: flex;
   justify-content: center;

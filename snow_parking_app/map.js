@@ -229,7 +229,7 @@ window.addEventListener("orientationchange", function() {
 
 
 window.onresize = function() {
-  sleep(1000).then(() => {
+  sleep(300).then(() => {
     map.resize();
     mapTop = document.getElementById('geo-status-area').offsetHeight;
     document.getElementById('day-selector-container').style.top = mapTop;
