@@ -132,6 +132,17 @@ function setStatus(day) {
   }
 }
 
+// Open SidenNav
+function openNav() {
+  console.log('open nav');
+  document.getElementById("SideNav").style.width = "80%";
+}
+
+// Close SideNav
+/* Set the width of the side navigation to 0 */
+function closeNav() {
+  document.getElementById("SideNav").style.width = "0";
+}
 
 // ############# //
 // ############# //
@@ -348,11 +359,16 @@ var betaArea = document.getElementById('emergency-declarer');
 
 for (var i = 0; i < betaButtons.length; i++) {
   betaButtons[i].addEventListener('click', function() {
-    if (this.value == 'x') {
-      document.getElementById('emergency-declarer').style.display = 'none';
-    }
-    else {
-      setStatus(this.value);
-    }
+    setStatus(this.value);
   });
 }
+
+var betaSwitch = document.getElementById('beta-mode');
+betaSwitch.addEventListener('change', function() {
+  if (this.checked) {
+    betaArea.style.display = 'flex';
+  }
+  else {
+    betaArea.style.display = 'none';
+  }
+});
