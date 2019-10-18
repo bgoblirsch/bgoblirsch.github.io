@@ -13,6 +13,7 @@
 	<!-- <link href="css/landscape-styles.css" rel="stylesheet" media="all and (orientation: landscape)" type='text/css'> -->
 	<link href="css/portrait-styles.css" rel="stylesheet" type='text/css'>
 	<link href="css/loading.css" rel="stylesheet" type='text/css'>
+	<link href="css/sidenav.css" rel="stylesheet" type='text/css'>
 	<!--
 	<link href="css/landscape-styles.css" rel="stylesheet" media="all and (min-aspect-ratio: 13/9)" type='text/css'>
 	<link href="css/portrait-styles.css" rel="stylesheet" media="all and (max-aspect-ratio: 13/9)" type='text/css'>
@@ -23,6 +24,20 @@
 
 <body>
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.min.js'></script>
+
+<div id="SideNav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+	<div id='beta-container'>
+		<span style='display:flex'>Beta Mode</span>
+		<label id='beta-switch' class="switch">
+  		<input id='beta-mode' type="checkbox">
+  		<span class="slider round"></span>
+		</label>
+	</div>
+  <a href="http://www.ci.minneapolis.mn.us/snow/snow_parking-info" target='blank'>Official Minneapolis Rules</a>
+	<a href="https://bgoblirsch.github.io" target='blank'>About</a>
+	<a href="mailto:brandon.goblirsch@gmail.com" target='blank'>Feedback</a>
+</div>
 
 <div id='day-selector-container'>
 	<button class='day-selector' id='day1-selector' value=1>
@@ -35,6 +50,7 @@
 		Day 3 Info
 	</button>
 </div>
+
 <!-- for beta only -->
 <div id='emergency-declarer'>
 	<button class='emergency-btn' id='day1-beta' value=1>
@@ -49,13 +65,18 @@
 	<button class='emergency-btn' id='reset-status' value=0>
 		Reset status
 	</button>
-	<button class='emergency-btn' id='hide-beta-btns' value='x'>
-		Close beta buttons
 </div>
 <!-- end of beta code> -->
+
 <div class='wrapper'>
 	<div id='geo-status-area'>
-		<div id='geocoder'></div>
+		<div id='geocoder'>
+			<div id='menu-btn-container' onclick="openNav()">
+				<div class='menu-btn'></div>
+				<div class='menu-btn'></div>
+				<div class='menu-btn'></div>
+			</div>
+		</div>
 		<div id='status-area'> <!-- auto resize text in this div to fit on one line in parent div -->
 			<!-- info button here saying, "A snow emergency will never be declared after X:00 PM"-->
 			<!-- i think these two p elements should be wrapped in divs, width = 50%, and font-auto scale in size to fit -->

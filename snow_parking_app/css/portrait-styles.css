@@ -31,10 +31,31 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
   display: flex;
   margin: 1vh;
   width: 100%;
-  max-width: 800px;
+  align-items: center;
 }
 .mapboxgl-ctrl-geocoder {
   min-width: 100%;
+}
+#menu-btn-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 10px;
+  z-index: 10;
+  padding: 10px;
+}
+.menu-btn {
+  width: 30px;
+  height: 4px;
+  background-color: rgba(0, 0, 0, 0.75);
+  margin: 2px 0;
+  border-radius: 20px;
+}
+.mapboxgl-ctrl-geocoder--icon-search {
+  display: none;
+}
+.mapboxgl-ctrl-geocoder--input {
+  padding-left: 60px;
 }
 #status-area {
   display: flex;
@@ -217,7 +238,7 @@ body { margin: 0; padding: 0; height: 100%; width: 100%; background-color: #2626
 
 /* For Beta only - emergency declarer */
 #emergency-declarer {
-  display: flex;
+  display: none;
   width: 100%;
   justify-content: center;
   top: 300px;
