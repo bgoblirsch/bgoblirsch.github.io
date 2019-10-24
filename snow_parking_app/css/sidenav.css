@@ -127,3 +127,8 @@ input:checked + .slider:before {
   display: flex;
   align-items: center;
 }
+
+#darkmode-container {
+  display: flex;
+  align-items: center;
+}

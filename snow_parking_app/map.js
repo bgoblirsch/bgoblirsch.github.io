@@ -134,7 +134,6 @@ function setStatus(day) {
 
 // Open SidenNav
 function openNav() {
-  console.log('open nav');
   document.getElementById("SideNav").style.width = "340px";
 }
 
@@ -151,23 +150,45 @@ function closeNav() {
 // ############# //
 
 function hideMapLayer() {
-  map.setLayoutProperty('test-data', 'visibility', 'none');
+  map.setLayoutProperty('route-data', 'visibility', 'none');
 }
 
 // set map layer style
 function setMapLayer(day) {
   var lineColor;
   if (day == 1) {
-    lineColor = 'green';
+    fillColor = [
+        'match',
+        ['get', 'DAY1'],
+        0, '#801f1f',
+        1, '#278235',
+        '#ccc',
+      ];
+      outlineColor = 'white'
   } else if (day == 2) {
-    lineColor = 'red';
+    fillColor = [
+        'match',
+        ['get', 'DAY2'],
+        0, '#801f1f',
+        1, '#278235',
+        '#ccc',
+      ];
+  } else if (day == 3) {
+    fillColor = [
+        'match',
+        ['get', 'DAY3'],
+        0, '#801f1f',
+        1, '#278235',
+        '#ccc',
+      ];
   }
   else {
-    lineColor = 'yellow';
+    console.log('invalid parameter for setMapLayer()');
   }
-  map.setPaintProperty('test-data', 'line-color', lineColor);
-  if (map.getLayoutProperty('test-data', 'visibility') == 'none') {
-    map.setLayoutProperty('test-data', 'visibility', 'visible');
+  map.setPaintProperty('route-data', 'fill-color', fillColor);
+  //map.setPaintProperty('route-data', 'fill-outline-color', outlineColor);
+  if (map.getLayoutProperty('route-data', 'visibility') == 'none') {
+    map.setLayoutProperty('route-data', 'visibility', 'visible');
   }
 }
 
@@ -253,21 +274,25 @@ map.addControl(geolocate, 'bottom-right');
 
 map.fitBounds(city_boundary);
 
-var testData = {
-  "id": "test-data",
-  "type": "line",
+var routeData = {
+  "id": "route-data",
+  "type": "fill",
   "source": {
     type: 'vector',
-    url: 'mapbox://bgoblirsch.ck0emp5hw00mr2ipzztgtsxl6-17ccf'
+    url: 'mapbox://bgoblirsch.3o2enpx8'
   },
-  "source-layer": "streetcarLines",
-  "layout": {
-    "line-join": "round",
-    "line-cap": "round"
-  },
-  "paint": {
-    "line-color": "#ff69b4",
-    "line-width": 1
+  "source-layer": "Snow_Emergency_Routes-74gvfg",
+  //"minzoom": 12,
+  'paint': {
+    "fill-antialias": true,
+    'fill-color': [
+      'match',
+      ['get', 'DAY1'],
+      0, '#801f1f',
+      1, '#133318',
+      '#ccc'
+    ],
+    //'fill-outline-color': 'white'
   }
 };
 
@@ -295,7 +320,7 @@ map.on('load', function () {
 
   // Add road data
   // map.addSource(snow_route_data);
-  map.addLayer(testData, mapLabels);
+  map.addLayer(routeData, mapLabels);
 
   // Get snow emergency status and set UI accordingly
   var statusResult = getStatus();
@@ -372,5 +397,15 @@ betaSwitch.addEventListener('change', function() {
   }
   else {
     betaArea.style.display = 'none';
+  }
+});
+
+var darkModeSwitch = document.getElementById('dark-mode');
+darkModeSwitch.addEventListener('change', function() {
+  if (this.checked) {
+    map.setStyle('mapbox://styles/mapbox/dark-v10');
+  }
+  else {
+    map.setStyle('mapbox://styles/mapbox/light-v10');
   }
 });
