@@ -219,7 +219,6 @@ var map = new mapboxgl.Map({
 var geocoder = new MapboxGeocoder({
   accessToken: mapboxgl.accessToken,
   countries: "us",
-  bbox: [-93.32916,45.05125,-93.19386,44.89015],
   mapboxgl: mapboxgl
 });
 var geocoderHTML = document.getElementById('geocoder');
@@ -400,12 +399,41 @@ betaSwitch.addEventListener('change', function() {
   }
 });
 
+
 var darkModeSwitch = document.getElementById('dark-mode');
 darkModeSwitch.addEventListener('change', function() {
   if (this.checked) {
     map.setStyle('mapbox://styles/mapbox/dark-v10');
+    sleep(300).then(() => {
+      if (typeof map.getLayer('route-data') == 'undefined') {
+        var layers = map.getStyle().layers;
+        // Find the index of the first symbol layer in the map style
+        var mapLabels;
+        for (var i = 0; i < layers.length; i++) {
+          if (layers[i].type === 'symbol') {
+            mapLabels = layers[i].id;
+            break;
+          }
+        }
+        map.addLayer(routeData,mapLabels);
+      }
+    });
   }
   else {
     map.setStyle('mapbox://styles/mapbox/light-v10');
+    sleep(300).then(() => {
+      if (typeof map.getLayer('route-data') == 'undefined') {
+        var layers = map.getStyle().layers;
+        // Find the index of the first symbol layer in the map style
+        var mapLabels;
+        for (var i = 0; i < layers.length; i++) {
+          if (layers[i].type === 'symbol') {
+            mapLabels = layers[i].id;
+            break;
+          }
+        }
+        map.addLayer(routeData,mapLabels);
+      }
+    });
   }
 });

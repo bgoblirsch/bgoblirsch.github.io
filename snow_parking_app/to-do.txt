@@ -1,5 +1,6 @@
 To Do:
-+ incorporate mpls route data
++ style route data better
++ new option in menu: display road labels only (default on)
 + GPS Accuracy
 + add a timeout; attempt to reload map; if no success after two 5-second timeouts, then warn user that connection is bad and let it try again with a longer timeout (you'll have to experiment with times)
 + move production onto a server and connect to the domain
