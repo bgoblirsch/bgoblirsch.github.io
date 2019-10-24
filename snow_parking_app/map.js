@@ -135,7 +135,7 @@ function setStatus(day) {
 // Open SidenNav
 function openNav() {
   console.log('open nav');
-  document.getElementById("SideNav").style.width = "80%";
+  document.getElementById("SideNav").style.width = "340px";
 }
 
 // Close SideNav
@@ -197,6 +197,8 @@ var map = new mapboxgl.Map({
 // geocoder object
 var geocoder = new MapboxGeocoder({
   accessToken: mapboxgl.accessToken,
+  countries: "us",
+  bbox: [-93.32916,45.05125,-93.19386,44.89015],
   mapboxgl: mapboxgl
 });
 var geocoderHTML = document.getElementById('geocoder');
