@@ -132,3 +132,9 @@ input:checked + .slider:before {
   display: flex;
   align-items: center;
 }
+
+#rules-video {
+  width: 340px;
+  height: 190px;
+  margin-top: 20px;
+}

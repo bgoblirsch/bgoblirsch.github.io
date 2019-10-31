@@ -32,7 +32,20 @@ sleep(200).then(() => {
   document.getElementById('emergency-declarer').style.top = mapTop + 60;
 });
 
+// Check if Dark Mode is enabled
+function checkDisplayMode() {
+  if (document.getElementById('dark-mode').checked) {
+    return 'dark';
+  }
+  else {
+    return 'light';
+  }
+};
+
+
+
 // if (landscape) { "Day 1 Info v"} else {"Day 1"}
+/*
 function changeDayButtonContent() {
   var dayButtons = document.getElementsByClassName('day-selector');
   if (isPortrait()) {
@@ -48,6 +61,7 @@ function changeDayButtonContent() {
     }
   }
 }
+*/
 
 function isPortrait() {
   if (window.screen.availHeight > window.screen.availWidth) {
@@ -66,7 +80,8 @@ function deactivate() {
 }
 
 function activate(day) {
-  setMapLayer(day);
+
+  setMapLayer(day,checkDisplayMode());
   // activate the correct day button (this should be a function)
   // display the correct info container (so should this)
 }
@@ -138,10 +153,25 @@ function openNav() {
 }
 
 // Close SideNav
-/* Set the width of the side navigation to 0 */
+// Set the width of the side navigation to 0
+// Also stop the video if it's playing
 function closeNav() {
+  stopVideos();
   document.getElementById("SideNav").style.width = "0";
 }
+// Code to stop youtube video on nav close
+// Later change so that it only pauses the video
+var stopVideos = function () {
+	var videos = document.querySelectorAll('iframe, video');
+	Array.prototype.forEach.call(videos, function (video) {
+		if (video.tagName.toLowerCase() === 'video') {
+			video.pause();
+		} else {
+			var src = video.src;
+			video.src = src;
+		}
+	});
+};
 
 // ############# //
 // ############# //
@@ -154,37 +184,76 @@ function hideMapLayer() {
 }
 
 // set map layer style
-function setMapLayer(day) {
+function setMapLayer(day, mode) {
   var lineColor;
-  if (day == 1) {
-    fillColor = [
-        'match',
-        ['get', 'DAY1'],
-        0, '#801f1f',
-        1, '#278235',
-        '#ccc',
-      ];
-      outlineColor = 'white'
-  } else if (day == 2) {
-    fillColor = [
-        'match',
-        ['get', 'DAY2'],
-        0, '#801f1f',
-        1, '#278235',
-        '#ccc',
-      ];
-  } else if (day == 3) {
-    fillColor = [
-        'match',
-        ['get', 'DAY3'],
-        0, '#801f1f',
-        1, '#278235',
-        '#ccc',
-      ];
+  if (mode == 'dark') {
+    if (day == 1) {
+      fillColor = [
+          'match',
+          ['get', 'DAY1'],
+          0, '#801f1f',
+          1, '#278235',
+          '#ccc',
+        ];
+    } else if (day == 2) {
+      fillColor = [
+          'match',
+          ['get', 'DAY2'],
+          0, '#801f1f',
+          1, '#278235',
+          '#ccc',
+        ];
+    } else if (day == 3) {
+      fillColor = [
+          'match',
+          ['get', 'DAY3'],
+          0, '#801f1f',
+          1, '#278235',
+          '#ccc',
+        ];
+    }
+    else {
+      console.log('invalid parameter for setMapLayer()');
+      console.log(day);
+    }
+  }
+  else if (mode == 'light') {
+    if (day == 1) {
+      fillColor = [
+          'match',
+          ['get', 'DAY1'],
+          0, '#d92525',
+          1, '#75f569',
+          '#ccc',
+        ];
+    } else if (day == 2) {
+      fillColor = [
+          'match',
+          ['get', 'DAY2'],
+          0, '#d92525',
+          1, '#75f569',
+          '#ccc',
+        ];
+    } else if (day == 3) {
+      fillColor = [
+          'match',
+          ['get', 'DAY3'],
+          0, '#d92525',
+          1, '#75f569',
+          '#ccc',
+        ];
+    }
+    else {
+      console.log('invalid parameter for setMapLayer()');
+      console.log(day);
+    }
   }
   else {
-    console.log('invalid parameter for setMapLayer()');
+    console.log('invalid value set for variable mode:');
+    console.log(mode);
   }
+
+
   map.setPaintProperty('route-data', 'fill-color', fillColor);
   //map.setPaintProperty('route-data', 'fill-outline-color', outlineColor);
   if (map.getLayoutProperty('route-data', 'visibility') == 'none') {
@@ -273,7 +342,28 @@ map.addControl(geolocate, 'bottom-right');
 
 map.fitBounds(city_boundary);
 
-var routeData = {
+var routeDataDark = {
+  "id": "route-data",
+  "type": "fill",
+  "source": {
+    type: 'vector',
+    url: 'mapbox://bgoblirsch.3o2enpx8'
+  },
+  "source-layer": "Snow_Emergency_Routes-74gvfg",
+  //"minzoom": 12,
+  'paint': {
+    "fill-antialias": true,
+    'fill-color': [
+      'match',
+      ['get', 'DAY1'],
+      0, '#d92525',
+      1, '#75f569',
+      '#ccc'
+    ],
+  }
+};
+
+var routeDataLight = {
   "id": "route-data",
   "type": "fill",
   "source": {
@@ -291,18 +381,8 @@ var routeData = {
       1, '#133318',
       '#ccc'
     ],
-    //'fill-outline-color': 'white'
   }
 };
-
-/*
-if ( !isPortrait() ) {
-  sleep(100).then(() => {
-    geoStatusHeight = document.getElementById('geo-status-fixed').offsetHeight;
-    document.getElementById('info-area').style.top = geoStatusHeight;
-  });
-}
-*/
 
 map.on('load', function () {
   document.getElementById('loading-map').style.display = 'none';
@@ -319,7 +399,7 @@ map.on('load', function () {
 
   // Add road data
   // map.addSource(snow_route_data);
-  map.addLayer(routeData, mapLabels);
+  map.addLayer(routeDataDark, mapLabels);
 
   // Get snow emergency status and set UI accordingly
   var statusResult = getStatus();
@@ -373,8 +453,18 @@ for (var i = 0; i < dayButtons.length; i++) {
       document.getElementById('info-area').style.display = 'flex';
       map.resize();
 
+
+      var mode
+      // Check if Dark Mode is enabled
+      if (document.getElementById('dark-mode').checked) {
+        mode = 'dark';
+      }
+      else {
+        mode = 'light';
+      }
+
       // Style the map layer
-      setMapLayer(this.value);
+      setMapLayer(this.value, checkDisplayMode());
     }
   });
 }
@@ -415,13 +505,13 @@ darkModeSwitch.addEventListener('change', function() {
             break;
           }
         }
-        map.addLayer(routeData,mapLabels);
+        map.addLayer(routeDataDark,mapLabels);
       }
     });
   }
   else {
-    map.setStyle('mapbox://styles/mapbox/light-v10');
-    sleep(300).then(() => {
+    map.setStyle('mapbox://styles/mapbox/streets-v10');
+    sleep(2000).then(() => {
       if (typeof map.getLayer('route-data') == 'undefined') {
         var layers = map.getStyle().layers;
         // Find the index of the first symbol layer in the map style
@@ -432,7 +522,9 @@ darkModeSwitch.addEventListener('change', function() {
             break;
           }
         }
-        map.addLayer(routeData,mapLabels);
+        map.addLayer(routeDataLight,'road-label-small');
+        document.getElementById('day1-selector').click();
+        document.getElementById('day1-selector').click();
       }
     });
   }

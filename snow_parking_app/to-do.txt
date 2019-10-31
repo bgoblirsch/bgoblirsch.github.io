@@ -1,9 +1,9 @@
 To Do:
-+ style route data better
++ fix route styling code
 + new option in menu: display road labels only (default on)
 + GPS Accuracy
++ make the "Do" text auto-wrap so each line is 50% of the text
 + add a timeout; attempt to reload map; if no success after two 5-second timeouts, then warn user that connection is bad and let it try again with a longer timeout (you'll have to experiment with times)
-+ move production onto a server and connect to the domain
 + add disclaimer, privacy policy, terms/user agreement etc.
   - Any parking signs override information found here. Do not solely rely on this application to determining where to park. You are ultimately responsible for parking properly so always have some situatioonal awareness of the sithuation. This app can only assist you in navigating Minneapolis's Snow Emergency System.   Dealing with the parking rules is no fun, but it allows the snow plows to do their job.
 + avoid dedicated application; see if notifications would be possible through browser or some other means
@@ -25,6 +25,7 @@ Immediately after MVP:
 + incorporate cookies so that you don't have to request location every time
 
 Non-MVP items:
++ change closeNav() functionality form stopVideo() -> pauseVideo()
 + add ability to switch basemap (non-mvp)
 + host your own tiles with postgis? (non-mvp)
 + menu button
