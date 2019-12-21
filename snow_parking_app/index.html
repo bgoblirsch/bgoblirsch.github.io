@@ -1,7 +1,7 @@
 <html>
 <head>
 	<meta charset='utf-8' />
-	<title>Minneapolis Snow Emergency Parking Guide</title>
+	<title>Mpls Snow Emergency Guide</title>
 	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 	<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.js'></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -20,10 +20,20 @@
 <body>
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.min.js'></script>
 
+<div id="welcome-container">
+	<div id="mode-selector" class="radio-selector">
+		<div class="radio-btn">
+			<input type="radio" label="Default" checked>
+		</div>
+		<div class="radio-btn">
+			<input type="radio" label="Dark Mode">
+		</div>
+</div>
+
 <div id="SideNav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-	<div id='beta-container'>
-		<span style='display:flex'>Beta Mode</span>
+	<div id="beta-container">
+		<span style"display:flex">Beta Mode</span>
 		<label id='beta-switch' class="switch">
   		<input id='beta-mode' type="checkbox">
   		<span class="slider round"></span>

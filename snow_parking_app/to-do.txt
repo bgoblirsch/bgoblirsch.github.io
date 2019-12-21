@@ -1,4 +1,5 @@
 To Do:
++ test out using the brighter color as the polygon outline one more time; that way you can match the status text color
 + fix route styling code
 + new option in menu: display road labels only (default on)
 + GPS Accuracy
