@@ -112,36 +112,39 @@ function switchPlayer() {
 
 let selected;
 function mousePressed() {
-  let x = floor(mouseX / w);
-  let y = floor(mouseY / h);
-  console.log("Clicked: ", board[x][y]);
-  // if human's turn and nothing is selected
-  if (currentPlayer.type == "human" && selected == null) {
-    // first check if what we clicked is a valid piece
-    if (board[x][y] instanceof Piece && board[x][y].player.type == currentPlayer.type) {
-      // if a jump is available, only allow jumpable pieces to be selected
-      if (currentPlayer.canJump()) {
-        if (board[x][y].force.length > 0) {
-          selected = selectPiece(board[x][y]);
-        } else {
-          console.log("Black can jump.");
-        }
-      } else {
-        selected = selectPiece(board[x][y]);
-      }
-    }
-    // else if a piece is selected
-  } else if (currentPlayer.type == "human" && selected) {
-    // first check if we are just deselecting
-    if (selected.position.x == x && selected.position.y == y) {
-      board[x][y] = selected;
-      selected = null;
-    } else if (selected.force.length > 0) {
-      selected.jump(x, y);
-    } else if (selected.available.length > 0) {
-      selected.move(x, y);
-    }
-    else {console.log("edge case found investigate mousePressed()")}
+  try {
+	  let x = floor(mouseX / w);
+	  let y = floor(mouseY / h);
+	  // if human's turn and nothing is selected
+	  if (currentPlayer.type == "human" && selected == null) {
+		// first check if what we clicked is a valid piece
+		if (board[x][y] instanceof Piece && board[x][y].player.type == currentPlayer.type) {
+		  // if a jump is available, only allow jumpable pieces to be selected
+		  if (currentPlayer.canJump()) {
+			if (board[x][y].force.length > 0) {
+			  selected = selectPiece(board[x][y]);
+			} else {
+			  console.log("Black can jump.");
+			}
+		  } else {
+			selected = selectPiece(board[x][y]);
+		  }
+		}
+		// else if a piece is selected
+	  } else if (currentPlayer.type == "human" && selected) {
+		// first check if we are just deselecting
+		if (selected.position.x == x && selected.position.y == y) {
+		  board[x][y] = selected;
+		  selected = null;
+		} else if (selected.force.length > 0) {
+		  selected.jump(x, y);
+		} else if (selected.available.length > 0) {
+		  selected.move(x, y);
+		}
+		else {console.log("edge case found investigate mousePressed()")}
+	  }
+  }
+  catch(e) {
   }
 }
 
