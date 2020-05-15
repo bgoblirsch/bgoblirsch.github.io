@@ -7,10 +7,10 @@ function randomMove() {
         let originx = j;
         let originy = i;
         if (validMove(originx, originy, originx - 2, originy + 2).bool) {
-          aijump(originx, originy, originx - 2, originy + 2);
+          aiJump(originx, originy, originx - 2, originy + 2);
           return;
         } else if (validMove(originx, originy, originx + 2, originy + 2).bool) {
-          aijump(originx, originy, originx + 2, originy + 2);
+          aiJump(originx, originy, originx + 2, originy + 2);
           return;
         }
       }

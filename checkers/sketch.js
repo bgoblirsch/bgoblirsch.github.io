@@ -9,8 +9,7 @@
 // ## To-Do ##
 // ###########
 // + test cases: simple move and jump check, check triple jumps, ensure all available cells calculate correctly, etc.
-// + minimax (seemingly) randomly throws errors
-//   - perhaps something with history and aiJump()?
+// + something causes minimax to make poor decisions; it seems to not properly evauluate black double jumps
 
 let board = new Array(8);
 const size = 8;
@@ -136,6 +135,7 @@ function mousePressed() {
           selected = null;
         }
       }
+      makeKing();
     } else if (validMove(originx, originy, x, y).bool) {
       move(originx, originy, x, y);
       currentPlayer = 'r'
@@ -270,8 +270,6 @@ function jump(originx, originy, destx, desty) {
   board[desty][destx] = board[originy][originx]
   board[originy][originx] = '_';
 
-  makeKing();
-
   history.push(copyBoard(board));
 }
 
@@ -317,7 +315,6 @@ function aiJump(originx, originy, destx, desty) {
       }
     }
   }
-  makeKing();
 }
 
 function switchPlayer() {
@@ -392,9 +389,7 @@ function resetBoard() {
   currentPlayer = 'b';
 }
 
-// let animate = false;
 // function animatePiece(piece, originx, origny, destx, desty) {
-//   animate = true;
 //   let x = originx * w;
 //   let y = originy * h;
 //   while (abs((destx * w) - x) > 0 && abs((desty * w) - y > 0)) {
