@@ -99,12 +99,14 @@ function mousePressed() {
     if (target == 'b' || target == 'B') {
       if (canPlayerJump(currentPlayer)) {
         if (canPieceJump(x, y)) {
+          bcount++;
           originx = x;
           originy = y;
           selected = target;
           board[y][x] = '_';
         }
       } else if (canPieceMove(x, y)) {
+        bcount++;
         originx = x;
         originy = y;
         selected = target;
@@ -117,6 +119,7 @@ function mousePressed() {
     // if we are just deselecting the piece
     if (originx == x && originy == y) {
       board[originy][originx] = selected;
+      bcount--;
       selected = null;
       return;
     }
@@ -131,15 +134,21 @@ function mousePressed() {
           originy = y;
           board[y][x] = '_';
         } else {
+          makeKing();
+          history.push(copyBoard(board));
           currentPlayer = 'r';
+          bcount--;
           selected = null;
+          redraw();
         }
       }
-      makeKing();
     } else if (validMove(originx, originy, x, y).bool) {
       move(originx, originy, x, y);
-      currentPlayer = 'r'
+      history.push(copyBoard(board));
+      currentPlayer = 'r';
+      bcount--;
       selected = null;
+      redraw();
     } else {
       board[originy][originx] = '_';
       console.log("not a valid move")
@@ -251,8 +260,6 @@ function move(originx, originy, destx, desty) {
   board[desty][destx] = board[originy][originx];
   board[originy][originx] = '_';
   makeKing();
-
-  history.push(copyBoard(board));
 }
 
 // function makes no gurantee that the parameters make a valid jump
@@ -269,8 +276,6 @@ function jump(originx, originy, destx, desty) {
   // move the piece
   board[desty][destx] = board[originy][originx]
   board[originy][originx] = '_';
-
-  history.push(copyBoard(board));
 }
 
 function aiJump(originx, originy, destx, desty) {
@@ -286,7 +291,6 @@ function aiJump(originx, originy, destx, desty) {
   // move the piece
   board[desty][destx] = board[originy][originx]
   board[originy][originx] = '_';
-  history.push(copyBoard(board));
 
   if (canPieceJump(destx, desty)) {
     originx = destx;
@@ -303,7 +307,7 @@ function aiJump(originx, originy, destx, desty) {
       } else if (validMove(originx, originy, originx + 2, originy - 2).bool) {
         aiJump(originx, originy, originx + 2, originy - 2);
       }
-    } else if (board[originy][originx] == 'R' || [originy][originx] == 'B') {
+    } else if (board[originy][originx] == 'R' || board[originy][originx] == 'B') {
       if (validMove(originx, originy, originx - 2, originy + 2).bool) {
         aiJump(originx, originy, originx - 2, originy + 2);
       } else if (validMove(originx, originy, originx + 2, originy + 2).bool) {
@@ -314,6 +318,8 @@ function aiJump(originx, originy, destx, desty) {
         aiJump(originx, originy, originx + 2, originy - 2);
       }
     }
+  } else {
+    history.push(copyBoard(board));
   }
 }
 
@@ -389,13 +395,21 @@ function resetBoard() {
   currentPlayer = 'b';
 }
 
-// function animatePiece(piece, originx, origny, destx, desty) {
+// function animatePiece(originx, origny, destx, desty) {
+//   let piece = board[originy][originx];
 //   let x = originx * w;
 //   let y = originy * h;
-//   while (abs((destx * w) - x) > 0 && abs((desty * w) - y > 0)) {
-//     console.log(x,y)
-//     x += (destx - originx);
-//     y += (desty - originy);
+//   while (abs((destx * w) - x) > 0 && abs((desty * h) - y > 0)) {
+//     if (destx > originx) {
+//       x++;
+//     } else {
+//       x--;
+//     }
+//     if (desty > originy) {
+//       y++;
+//     } else {
+//       y--;
+//     }
 //     switch (piece) {
 //       case 'r':
 //         fill('red');
@@ -420,6 +434,18 @@ function resetBoard() {
 // }
 
 function draw() {
+  // always check to see if the game is over and return the winner if it is
+  if (gameOver()) {
+    resultP = createP('');
+    resultP.style('font-size', '32pt');
+    if (winner() == 'draw') {
+      resultP.html("Draw!")
+    } else {
+      resultP.html(`${winner()} wins!`);
+    }
+    noLoop();
+  }
+
   bcount = 0;
   rcount = 0;
   // draw the board
@@ -429,12 +455,14 @@ function draw() {
       if (white_cell == true) {
         // Draw white non-playable square
         fill(255);
+        noStroke();
         rectMode(CORNER);
         rect(i * w, j * h, w, h);
         white_cell = false;
       } else {
         // draw grey playable square
         fill(100);
+        noStroke();
         rectMode(CORNER);
         rect(i * w, j * h, w, h);
         white_cell = true;
@@ -455,7 +483,7 @@ function draw() {
             fill('red');
             x = i * h + h / 2;
             y = j * w + w / 2;
-            noStroke()
+            noStroke();
             ellipse(x, y, w / 2);
             break;
           case 'b':
@@ -464,15 +492,17 @@ function draw() {
             x = i * h + h / 2;
             y = j * w + w / 2;
             if (currentPlayer == 'b' && board[j][i] == 'b' && canPieceJump(i, j)) {
+              strokeWeight(4);
               stroke(255);
             } else {
-              noStroke()
+              noStroke();
             }
             ellipse(x, y, w / 2);
             break;
           case 'R':
             rcount += 1;
             fill('red');
+            noStroke();
             x = i * h + h / 2;
             y = j * w + w / 2;
             rectMode(CENTER);
@@ -485,6 +515,7 @@ function draw() {
             y = j * w + w / 2;
             noStroke()
             if (currentPlayer == 'b' && board[j][i] == 'B' && canPieceJump(i, j)) {
+              strokeWeight(4);
               stroke(255);
             } else {
               noStroke()
@@ -497,6 +528,14 @@ function draw() {
     }
   }
 
+  // if it's the ai's turn, have it make a move
+  if (currentPlayer == 'r' && rcount > 0) {
+    //randomMove();
+    bestMove('r');
+    makeKing();
+    // switch player
+    currentPlayer = 'b';
+  }
 
   // if something is selected, keep it at mousex/mousey
   if (selected != null) {
@@ -524,29 +563,9 @@ function draw() {
         break;
     }
   }
-
-  // if it's the ai's turn, have it make a move
-  if (currentPlayer == 'r' && rcount > 0) {
-    // ai make first avail move
-    //randomMove();
-
-    bestMove('r');
-    // switch player
-    currentPlayer = 'b';
-  }
-
-  // always check to see if the game is over and return the winner if it is
-  if (gameOver()) {
-    resultP = createP('');
-    resultP.style('font-size', '32pt');
-    if (winner() == 'draw') {
-      resultP.html("Draw!")
-    } else {
-      resultP.html(`${winner()} wins!`);
-    }
-    noLoop();
-  }
 }
+
+
 
 // lengthy function to check if a piece can jump
 function canPieceJump(originx, originy) {
