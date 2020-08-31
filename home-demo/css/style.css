@@ -1,0 +1,127 @@
+html, body {
+    padding: 0;
+    margin: 0;
+    bottom: 0;
+    height: 100vh;
+    overflow: hidden;
+    font-family: 'Open Sans', sans-serif;
+}
+
+#map {
+	position: absolute;
+	top: 0;
+  right: 0;
+	height: 100vh;
+	width: 75vw;
+}
+
+#sideBar {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  align-items: center;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 25vw;
+  background: #414141;
+}
+
+#logoContainer {
+  position: relative;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  z-index: 100;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  display: inline-flex;
+  background: #C3E7DA;
+}
+
+#mapInfoContainer {
+  color: white;
+  padding: 10px 2% 10px 2%;
+  align-self: flex-start;
+  overflow-y: auto;
+  width: 96%
+}
+
+#mapInfoContainer::-webkit-scrollbar {
+  width: 10px;
+}
+
+#mapInfoContainer::-webkit-scrollbar-track {
+  display: none;
+}
+
+#mapInfoContainer::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.5);
+  border-radius: 10px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+#logo {
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+#header {
+  display: inline-block;
+  font-family: 'arial';
+  vertical-align: sub;
+  margin: 0px;
+  padding: 0px 3px;
+}
+
+.info {
+  /* font-size: 1.3vh; */
+  font-size: 14px;
+  padding: 0px 20px 0px 10px;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+details {
+  color: white;
+  font: 200 14px Helvetica, Verdana, sans-serif;
+  border: 0;
+  text-decoration: none;
+  padding: 5px;
+
+  -webkit-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -moz-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -o-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -ms-transition: font-size 0.3s ease, background-color 0.3s ease;
+  transition: font-size 0.3s ease, background-color 0.3s ease;
+  display: block;
+}
+
+summary:focus {
+  outline: none;
+}
+
+summary {
+  font-size: 20px;
+}
+
+details.firstOrder {
+  margin-left: 18px;
+}
+
+summary:hover {
+  cursor: pointer;
+  background: #646464;
+}
+
+p {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 23px;
+}
