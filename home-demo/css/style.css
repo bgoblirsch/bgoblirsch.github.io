@@ -10,7 +10,7 @@ html, body {
 #map {
 	position: absolute;
 	top: 0;
-  right: 0;
+  left: 0;
 	height: 100vh;
 	width: 75vw;
 }
@@ -21,7 +21,7 @@ html, body {
   position: absolute;
   align-items: center;
   top: 0;
-  left: 0;
+  right: 0;
   height: 100vh;
   width: 25vw;
   background: #414141;
@@ -115,13 +115,18 @@ details.firstOrder {
   margin-left: 18px;
 }
 
+.intro:hover {
+  cursor: pointer;
+  background: #ffffff82 !important;
+}
+
 summary:hover {
   cursor: pointer;
   background: #646464;
 }
 
 p {
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   margin-left: 23px;
 }
